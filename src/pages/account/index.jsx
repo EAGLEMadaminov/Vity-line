@@ -14,6 +14,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Formik } from "formik";
 import { useGlobalContext } from "@/context.jsx";
+import Link from "next/link";
 
 export async function getStaticProps({ locale }) {
   return {
@@ -38,23 +39,15 @@ function Account() {
   const { formInfo, setFormInfo, registerInfo, setRegisterInfo } =
     useGlobalContext();
 
-  console.log(registerInfo);
   if (url === "/ru/account") {
     setLangValue("ru");
   }
-  const EnterPatsientBtn = () => {
-    router.push("account/patsient");
-  };
 
-  console.log(registerInfo);
   const fetchFunck = async () => {
     let token = localStorage.getItem("token");
 
     const singResponse = await fetch("https://vitainline.uz/api/v1/auth/user", {
       method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -70,12 +63,7 @@ function Account() {
     }
   };
 
-  console.log(registerInfo);
   fetchFunck();
-
-  const handleExit = () => {
-    window.location.pathname = "";
-  };
 
   const ChangeLangBtn = (e) => {
     let lang = e.target.value;
@@ -85,7 +73,9 @@ function Account() {
       window.location.pathname = "/account";
     }
   };
-
+  const handleExit = () => {
+    router.pathname = "";
+  };
   const handleChangeInput = async (e) => {
     const { name, value } = e.target;
     if ((e.target.name = "passport")) {
@@ -117,7 +107,6 @@ function Account() {
     );
 
     const info = await response.json();
-    console.log(info);
     localStorage.setItem("ptoken", info.token);
 
     if (response.status === 200) {
@@ -154,7 +143,8 @@ function Account() {
               onClick={handleExit}
               className="w-[200px]  ml-[18px] flex py-[5px]  px-[18px]items-center h-[36px] text-[#FF0000] border rounded-[12px] border-[#D7E6E7]"
             >
-              <RxExit className="mx-2 my-auto" /> {t("account:exit_account")}
+              <RxExit className="mx-2 my-auto" />
+              {t("account:exit_account")}
             </button>
           </div>
         </div>
@@ -244,13 +234,13 @@ function Account() {
                   />
                 </div>
                 {showInfo ? (
-                  <button
+                  <Link
                     className="text-white ml-5 p-2   justify-between flex w-[220px] lg:w-[300px] rounded-[12px] mt-8  bg-gradient-to-t from-[#1BB7B5] to-[#0EC5C9] font-[500] hover:bg-gradient-to-t hover:from-[#0F9694] hover:to-[#0A7476]"
-                    onClick={EnterPatsientBtn}
+                    href="account/patsient"
                   >
                     {t("account:pattsient_btn")}
                     <BsArrowRight className="text-2xl " />
-                  </button>
+                  </Link>
                 ) : (
                   ""
                 )}

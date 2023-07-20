@@ -2,17 +2,14 @@ import React from "react";
 import { useGlobalContext } from "@/context";
 
 function KonsultatsiyaModal({ data }) {
-  console.log(data);
   const handleSendBtn = async () => {
     let newObject = {};
-    console.log(data);
     if (data.time) {
       data.time = new Date(data.time);
     } else if (data == {}) {
       data.time = new Date();
     }
     let day = new Date(data.time);
-    console.log(day);
     day = day.getDate();
     if (day < 10) {
       day = `0${day}`;
@@ -22,14 +19,12 @@ function KonsultatsiyaModal({ data }) {
     if (month < 10) {
       month = `0${month}`;
     }
-    console.log(month);
     let year = new Date(data.time);
     year = year.getFullYear();
     const contain = `${day}.${month}.${year}`;
     delete data.time;
     newObject = { ...data };
     newObject.time = contain;
-    console.log(newObject);
     let token = localStorage.getItem("token");
     const response = await fetch("https://vitainline.uz/api/v1/consultations", {
       method: "POST",
@@ -39,7 +34,6 @@ function KonsultatsiyaModal({ data }) {
       },
       body: JSON.stringify(newObject),
     });
-    console.log(response.status);
     if (response.status === 200) {
       window.location.pathname = "/account/patsient/konsultatsiya";
     }

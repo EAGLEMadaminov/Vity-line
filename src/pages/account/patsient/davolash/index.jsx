@@ -14,7 +14,12 @@ import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { useGlobalContext } from "@/context";
-import Modal from "@/components/Davolash/modal";
+import dynamic from "next/dynamic";
+
+const DynamicModal = dynamic(() => import("@/components/Davolash/modal"), {
+  ssr: false,
+});
+import Link from "next/link";
 
 export async function getStaticProps({ locale }) {
   return {
@@ -29,12 +34,10 @@ function Davolash() {
   const { showModal, setShowModal } = useGlobalContext();
   const [hasInfo, setHasInfo] = useState(false);
   const [hillInfo, setHillInfo] = useState("");
+  // const [token, setToken] = useState("");
 
   const router = useRouter();
 
-  const handleDavohistoryBtn = () => {
-    router.push("/account/patsient/davolash/history");
-  };
   const GoToBackBtn = () => {
     router.push("/account/patsient");
   };
@@ -45,21 +48,18 @@ function Davolash() {
     setShowModal(true);
   };
 
-  const addNewBtn = () => {
-    router.push("/account/patsient/davolash/add");
-  };
   const ChangeLangBtn = (e) => {
     let lang = e.target.value;
     if (lang === "ru") {
       router.push("/ru/account/patsient/davolash");
     } else {
-      window.location.pathname = "/account/patsient/davoalsh";
+      window.location.pathname = "/account/patsient/davolash";
     }
   };
 
   const fetchFunck = async () => {
     setHasInfo(false);
-    let token = localStorage.getItem("ptoken");
+    const token = localStorage.getItem("ptoken");
     const response = await fetch(
       `https://vitainline.uz/api/v1/healings/patient?type=current`,
       {
@@ -71,7 +71,6 @@ function Davolash() {
       }
     );
     const jsonData = await response.json();
-    console.log(jsonData);
 
     if (response.status === 200 && jsonData.data) {
       setHillInfo(jsonData);
@@ -79,6 +78,9 @@ function Davolash() {
     }
   };
   useEffect(() => {
+    // let value;
+    // value = localStorage.getItem("ptoken") || "";
+    // setToken(value);
     fetchFunck();
   }, []);
 
@@ -136,20 +138,20 @@ function Davolash() {
               </h3>
             </div>
             <div className="mr-10 flex items-center">
-              <button
+              <Link
                 className="px-[30px] bg-[#F8FCFC] dark:text-[#1B3B3C] font-[500] py-2 rounded-[12px] flex items-center"
-                onClick={handleDavohistoryBtn}
+                href="/account/patsient/davolash/history"
               >
                 <RxCounterClockwiseClock className="mr-[13px]" />{" "}
                 {t("account:history")}
-              </button>
-              <button
+              </Link>
+              <Link
                 className="bg-[#1BB7B5] py-2 rounded-[12px] ml-5 flex items-center text-white px-[30px] "
-                onClick={addNewBtn}
+                href="/account/patsient/davolash/add"
               >
                 <AiOutlinePlus className="font-[500] mr-4" />{" "}
                 {t("account:add_new")}
-              </button>
+              </Link>
             </div>
           </div>
           <div className=" text-center  mx-10">
@@ -163,7 +165,7 @@ function Davolash() {
               {hillInfo.data.map((item, index) => {
                 return (
                   <div key={index} className="flex mx-2 mt-5 mb-20">
-                    {showModal ? <Modal /> : ""}
+                    {showModal ? <DynamicModal /> : ""}
                     <div
                       className="border rounded-[12px] p-3 flex shadow-[0px_6px_16px] shadow-[#EFF4F4] flex-col w-[305px] cursor-pointer "
                       onClick={showFormBtn}

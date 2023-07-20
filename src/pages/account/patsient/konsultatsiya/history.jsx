@@ -26,6 +26,7 @@ function History() {
   const router = useRouter();
   const [hasInfo, setHasInfo] = useState(false);
   const [consInfo, setConsInfo] = useState("");
+  const [token, setToken] = useState("");
 
   const handleTavsiyahistoryBtn = () => {
     router.push("/account/patsient/konsultatsiya/history");
@@ -48,7 +49,6 @@ function History() {
   };
 
   const fetchFunck = async () => {
-    let token = localStorage.getItem("ptoken");
     const response = await fetch(
       "https://vitainline.uz/api/v1/consultations/patient?type=history",
       {
@@ -60,7 +60,6 @@ function History() {
       }
     );
     const jsonData = await response.json();
-    console.log(jsonData);
     if (response.status === 200 && jsonData.data !== []) {
       setConsInfo(jsonData);
       setHasInfo(true);
@@ -68,6 +67,9 @@ function History() {
   };
 
   useEffect(() => {
+    let value;
+    value = localStorage.getItem("ptoken") || "";
+    setToken(value);
     fetchFunck();
   }, []);
 

@@ -29,6 +29,8 @@ function Add() {
   const { t } = useTranslation();
   const router = useRouter();
   const [allData, setAllData] = useState({});
+  const [patId, setPatId] = useState("");
+
   const handleExit = () => {
     router.pathname = "";
   };
@@ -50,12 +52,13 @@ function Add() {
     time: new Date(),
     description: "",
   };
-
+  useEffect(() => {
+    let value;
+    value = localStorage.getItem("patId") || "";
+    setPatId(value);
+  }, []);
   const onSubmit = (data) => {
-    console.log(data);
-    let token = localStorage.getItem("token");
-    let id = localStorage.getItem("patId");
-    data.patientId = id;
+    data.patientId = patId;
     flushSync(() => {
       setAllData(data);
     });

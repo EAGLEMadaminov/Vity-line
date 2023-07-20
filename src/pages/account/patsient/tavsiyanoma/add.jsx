@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import img from "../../../../images/cite-logo.png";
 import { FiChevronDown } from "react-icons/fi";
@@ -27,6 +27,8 @@ function Rengen() {
   const { t } = useTranslation();
   const router = useRouter();
   const [numberEatDrug, setNumberEatDrug] = useState([1]);
+  const [token, setToken] = useState("");
+  const [id, setId] = useState("");
   const initialValues = {
     title: "",
     description: "",
@@ -34,28 +36,34 @@ function Rengen() {
     duration: "",
   };
   const onSubmit = async (values) => {
-    console.log(values);
-    let token = localStorage.getItem("token");
-    console.log(values);
-    values.patientId = localStorage.getItem("patId");
-    const response = await fetch(
-      "https://vitainline.uz/api/v1/recommendations",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(values),
+    if (id && token) {
+      values.patientId = id;
+      const response = await fetch(
+        "https://vitainline.uz/api/v1/recommendations",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(values),
+        }
+      );
+      const info = await response.json();
+      window.localStorage.setItem("tavsiyaId", info.data.id);
+      if (response.status === 200) {
+        window.location.pathname = "/account/patsient/tavsiyanoma";
       }
-    );
-    const info = await response.json();
-    console.log(info.data.id);
-    localStorage.setItem("tavsiyaId", info.data.id);
-    if (response.status === 200) {
-      window.location.pathname = "/account/patsient/tavsiyanoma";
     }
   };
+  useEffect(() => {
+    let value;
+    let item;
+    value = localStorage.getItem("token") || "";
+    setToken(value);
+    item = localStorage.getItem("patId") || "";
+    setId(item);
+  }, []);
   const formik = useFormik({
     initialValues,
     onSubmit,

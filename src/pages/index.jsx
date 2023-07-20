@@ -7,6 +7,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { useGlobalContext } from "@/context.jsx";
 import { useForm } from "react-hook-form";
+import dynamic from "next/dynamic";
 export async function getStaticProps({ locale }) {
   return {
     props: {
@@ -25,11 +26,10 @@ export default function Home(props) {
 
   const handleEnterList = (e) => {
     e.preventDefault();
-    window.location.pathname = "/register";
+    location.pathname = "/register";
   };
   let info;
   const onSubmit = async (data) => {
-    console.log(data);
     const response = await fetch(
       "https://vitainline.uz/api/v1/auth/signin/doctor",
       {
@@ -46,10 +46,9 @@ export default function Home(props) {
 
     info = await response.json();
     setFormInfo(info);
-    console.log(formInfo);
     if (response.status == 200) {
-      localStorage.setItem("token", info.token);
-      window.location.pathname = "account";
+      window.localStorage.setItem("token", info.token);
+      location.pathname = "account";
     } else {
       if (window.location.pathname === "/ru") {
         setResInfo("Логин или пароль введен неверно. Попробуйте еще раз!");

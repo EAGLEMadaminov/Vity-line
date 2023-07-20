@@ -30,10 +30,9 @@ function Tavsiyanoma() {
   const [hasInfo, setHasInfo] = useState(false);
   let sortInfo = [];
   const fetchFunck = async () => {
-    let token = localStorage.getItem("ptoken");
-    let id = localStorage.getItem("tavsiyaId");
+    const token = localStorage.getItem("ptoken");
     const response = await fetch(
-      `https://vitainline.uz/api/v1/recommendations/${id}`,
+      `https://vitainline.uz/api/v1/recommendations/patient?type=current`,
       {
         method: "GET",
         headers: {
@@ -43,15 +42,10 @@ function Tavsiyanoma() {
       }
     );
     const jsonData = await response.json();
-    console.log(jsonData);
     if (response.status == 200) {
       setRecomData(jsonData);
+      console.log(jsonData);
       setHasInfo(true);
-      sortInfo = jsonData.data.times.filter((item) => {
-        if (item !== "") {
-          return item;
-        }
-      });
     }
   };
   useEffect(() => {
@@ -157,29 +151,35 @@ function Tavsiyanoma() {
           </div>
 
           {hasInfo ? (
-            <div className="flex mx-10 mt-5 mb-20">
-              <div className="border rounded-[12px] dark:text-[#1B3B3C] p-3 flex  shadow-[0px_6px_16px] shadow-[#EFF4F4] flex-col w-[305px]  ">
-                <div className="flex items-center  mb-2">
-                  <span className="bg-[url('../images/tavsiyanoma/davleniya.png')]  bg-center  rounded-[32px] bg-[#EAF9FB] bg-no-repeat w-8 h-8"></span>
-                  <p className="text-[#1B3B3C]  ml-2 font-[500] flex">
-                    {recomData.data.title}
-                  </p>
-                </div>
-                {recomData.data.times.map((time, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="flex items-center mb-3 rounded-[8px] px-2 h-[42px]  bg-[#E8FCEB] text-[12px]"
-                    >
-                      <BsClock className="text-[#1BB7B5] mx-2" />
-                      <p>{time} </p>
+            <div className="flex mx-10 mt-5 mb-20 flex-wrap">
+              {recomData?.data?.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="border rounded-[12px] mt-5 mx-2 dark:text-[#1B3B3C] p-3 flex  shadow-[0px_6px_16px] shadow-[#EFF4F4] flex-col w-[300px]  "
+                  >
+                    <div className="flex items-center  mb-2">
+                      <span className="bg-[url('../images/tavsiyanoma/davleniya.png')]  bg-center  rounded-[32px] bg-[#EAF9FB] bg-no-repeat w-8 h-8"></span>
+                      <p className="text-[#1B3B3C]  ml-2 font-[500] flex">
+                        {item.title}
+                      </p>
                     </div>
-                  );
-                })}
-              </div>
+                    {item.times.map((time, indx) => {
+                      return (
+                        <div
+                          key={indx}
+                          className="flex items-center mb-3 rounded-[8px] px-2 h-[42px]  bg-[#E8FCEB] text-[12px]"
+                        >
+                          <BsClock className="text-[#1BB7B5] mx-2" />
+                          <p>{time} </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
             </div>
           ) : (
-            // })
             <div className="w-[194px] text-center mx-auto my-[150px]">
               <span className="block bg-[url('../images/davolash/history.png')] mx-auto w-20 h-20 bg-center rounded-[80px] bg-[#EAF9FB] bg-no-repeat"></span>
               <p className="text-[#759495]">{t("account:no-info")}</p>

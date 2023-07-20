@@ -11,7 +11,7 @@ import { BsClock } from "react-icons/bs";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-import { flushSync } from "react-dom";
+import Link from "next/link";
 
 export async function getStaticProps({ locale }) {
   return {
@@ -21,41 +21,35 @@ export async function getStaticProps({ locale }) {
   };
 }
 
-function Kansultatsiya() {
+function Kansultatsiya({ users }) {
   const { t } = useTranslation();
   const router = useRouter();
   const [hasInfo, setHasInfo] = useState(true);
   const [getInfo, setGetInfo] = useState("");
 
-  const handleTavsiyahistoryBtn = () => {
-    router.push("/account/patsient/konsultatsiya/history");
-  };
+  // const fetchFunck = async () => {
+  //   const token = localStorage.getItem("ptoken");
+  //   setHasInfo(false);
+  //   const response = await fetch(
+  //     `https://vitainline.uz/api/v1/consultations/patient?type=current`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     }
+  //   );
+  //   const jsonData = await response.json();
+  //   if (response.status == 200) {
+  //     setGetInfo(jsonData);
+  //     setHasInfo(true);
+  //   }
+  // };
+  // useEffect(() => {
+  //   fetchFunck();
+  // }, []);
 
-  const fetchFunck = async () => {
-    setHasInfo(false);
-    let token = localStorage.getItem("ptoken");
-    let id = localStorage.getItem("tavsiyaId");
-    const response = await fetch(
-      `https://vitainline.uz/api/v1/consultations/patient?type=current`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const jsonData = await response.json();
-    console.log(jsonData);
-    console.log(response.status);
-    if (response.status == 200) {
-      setGetInfo(jsonData);
-      setHasInfo(true);
-    }
-  };
-  useEffect(() => {
-    fetchFunck();
-  }, []);
   const GoToBackBtn = () => {
     router.push("/account/patsient");
   };
@@ -63,10 +57,6 @@ function Kansultatsiya() {
     window.location.pathname = "";
   };
   const showFormBtn = () => {};
-
-  const addNewBtn = () => {
-    router.push("/account/patsient/konsultatsiya/add");
-  };
 
   const ChangeLangBtn = (e) => {
     let lang = e.target.value;
@@ -130,20 +120,20 @@ function Kansultatsiya() {
               </h3>
             </div>
             <div className="mr-10 flex items-center">
-              <button
+              <Link
                 className="px-[30px] bg-[#F8FCFC] font-[500] dark:text-[#1B3B3C] py-2 rounded-[12px] flex items-center"
-                onClick={handleTavsiyahistoryBtn}
+                href="/account/patsient/konsultatsiya/history"
               >
                 <RxCounterClockwiseClock className="mr-[13px]" />{" "}
                 {t("account:history")}
-              </button>
-              <button
+              </Link>
+              <Link
                 className="bg-[#1BB7B5] py-2 rounded-[12px] ml-5 flex items-center text-white px-[30px] "
-                onClick={addNewBtn}
+                href="/account/patsient/konsultatsiya/add"
               >
                 <AiOutlinePlus className="font-[500] mr-4" />{" "}
                 {t("account:add_new")}
-              </button>
+              </Link>
             </div>
           </div>
           <div className=" text-center  mx-10">
@@ -154,7 +144,7 @@ function Kansultatsiya() {
 
           {hasInfo ? (
             <div className="flex flex-wrap ml-10">
-              {getInfo?.data?.map((item, index) => {
+              {users?.data?.map((item, index) => {
                 let time = new Date(item.time);
                 time = time.getDate();
                 return (
@@ -193,3 +183,23 @@ function Kansultatsiya() {
 }
 
 export default Kansultatsiya;
+
+export async function getStaticProps() {
+  const token = localStorage.getItem("ptoken");
+  const response = await fetch(
+    `https://vitainline.uz/api/v1/consultations/patient?type=current`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await response.json();
+  return {
+    props: {
+      users: data,
+    },
+  };
+}

@@ -25,15 +25,14 @@ function TavsiyanomaHistory() {
   const { t } = useTranslation();
   const [allRecom, setAllRecom] = useState("");
   const [hasInfo, setHasInfo] = useState(false);
-  const time = new Date();
-  console.log(time.getDate());
+  const [token, setToken] = useState("");
+  const [recomId, setRecomId] = useState("");
 
   const router = useRouter();
 
   const fetchFunck = async () => {
     setHasInfo(false);
-    let token = localStorage.getItem("ptoken");
-    let id = localStorage.getItem("tavsiyaId");
+    let id = recomId;
     const singResponse = await fetch(
       `https://vitainline.uz/api/v1/recommendations/patient?type=history`,
       {
@@ -52,6 +51,12 @@ function TavsiyanomaHistory() {
     }
   };
   useEffect(() => {
+    let value;
+    let itemId;
+    value = localStorage.getItem("ptoken") || "";
+    setToken(value);
+    itemId = localStorage.getItem("tavsiyaId") || "";
+    setRecomId(itemId);
     fetchFunck();
   }, []);
 

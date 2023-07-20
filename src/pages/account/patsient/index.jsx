@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import img from "../../../images/cite-logo.png";
 import { FiChevronDown } from "react-icons/fi";
@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { useGlobalContext } from "@/context";
+import Link from "next/link";
 
 export async function getStaticProps({ locale }) {
   return {
@@ -26,29 +27,37 @@ export async function getStaticProps({ locale }) {
 function Patsient() {
   const { t } = useTranslation();
   const { registerInfo, patsientInfo, setPatsientInfo } = useGlobalContext();
+  const [token, setToken] = useState("");
   const router = useRouter();
 
   const fetchFunck = async () => {
-    let token = localStorage.getItem("ptoken");
-    const singResponse = await fetch("https://vitainline.uz/api/v1/auth/user", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const jsonData = await singResponse.json();
-
-    setPatsientInfo(jsonData.data);
+    if (token) {
+      let singResponse;
+      let jsonData;
+      try {
+        singResponse = await fetch("https://vitainline.uz/api/v1/auth/user", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        jsonData = await singResponse.json();
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(singResponse.status);
+      setPatsientInfo(jsonData.data);
+    }
   };
+  useEffect(() => {
+    let value;
+    value = localStorage.getItem("ptoken") || "";
+    setToken(value);
+  }, []);
 
   fetchFunck();
-  const handleDavolash = () => {
-    router.push("/account/patsient/davolash");
-  };
-  const handleTavsiyanoma = () => {
-    router.push("/account/patsient/tavsiyanoma");
-  };
+
   const handleKonsultant = () => {
     // router.push("/account/patsient/konsultatsiya");
   };
@@ -173,22 +182,22 @@ function Patsient() {
               {t("account:pattsient_btn")}
             </h2>
             <div className="flex justify-between w-full">
-              <button
+              <Link
                 className="w-[305px] p-2 flex items-center rounded-[12px] shadow-[0px_6px_16px_#EFF4F4]"
-                onClick={handleDavolash}
+                href="/account/patsient/davolash"
               >
                 <span className="block w-10 bg-center h-10 rounded-[40px] mr-2 bg-[#EAF9FB]  bg-[url('../images/patsient/heart.png')] bg-no-repeat"></span>
                 <p className="dark:text-[#1B3B3C]">{t("account:davo")}</p>
                 <FiChevronRight className="text-[#759495] ml-auto " />
-              </button>
-              <button
+              </Link>
+              <Link
                 className="w-[305px] flex items-center p-2 rounded-[12px] shadow-[0px_6px_16px_#EFF4F4]"
-                onClick={handleTavsiyanoma}
+                href="/account/patsient/tavsiyanoma"
               >
                 <span className="block w-10 h-10 bg-center mr-2 rounded-[40px] bg-[#EAF9FB]  bg-[url('../images/patsient/books.png')] bg-no-repeat"></span>
                 <p className="dark:text-[#1B3B3C]">{t("account:recom")} </p>
                 <FiChevronRight className="text-[#759495] ml-auto" />
-              </button>
+              </Link>
               <button
                 className=" w-[305px] ml-5 p-2 flex  items-center rounded-[12px] shadow-[0px_6px_16px_#EFF4F4]"
                 onClick={handleKonsultant}

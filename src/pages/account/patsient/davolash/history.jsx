@@ -27,6 +27,7 @@ function Davolash() {
   const router = useRouter();
   const [hasInfo, setHasInfo] = useState(false);
   const [hillInfo, setHilInfo] = useState("");
+  const [token, setToken] = useState("");
 
   const GoToBackBtn = () => {
     router.push("/account/patsient/davolash");
@@ -50,7 +51,6 @@ function Davolash() {
 
   const fetchFunck = async () => {
     setHasInfo(false);
-    let token = localStorage.getItem("ptoken");
     const response = await fetch(
       `https://vitainline.uz/api/v1/healings/patient?type=history`,
       {
@@ -62,7 +62,6 @@ function Davolash() {
       }
     );
     const jsonData = await response.json();
-    console.log(jsonData);
 
     if (response.status === 200) {
       setHilInfo(jsonData);
@@ -70,10 +69,12 @@ function Davolash() {
     }
   };
   useEffect(() => {
+    let value;
+    value = localStorage.getItem("ptoken");
+    setToken(value);
     fetchFunck();
   }, []);
 
-  console.log(hillInfo.endedDate)
   return (
     <div className="min-h-[100vh]  bg-[#F7FEFE]">
       <div className="w-[1035px] mx-auto">
@@ -139,7 +140,10 @@ function Davolash() {
             <div className="flex flex-wrap ml-8 mt-5">
               {hillInfo.data.map((item, index) => {
                 return (
-                  <div key={index} className="border rounded-[12px] mt-5 shadow-[0px_6px_16px] shadow-[#EFF4F4] p-3 flex flex-col w-[305px] ml-4 cursor-pointer">
+                  <div
+                    key={index}
+                    className="border rounded-[12px] mt-5 shadow-[0px_6px_16px] shadow-[#EFF4F4] p-3 flex flex-col w-[305px] ml-4 cursor-pointer"
+                  >
                     <div className="flex items-center mb-2">
                       <div className="bg-[url('../images/davolash/davolash-dori.png')] bg-no-repeat w-8 h-8"></div>
                       <p className="text-[#1B3B3C]  ml-2 font-[500]">

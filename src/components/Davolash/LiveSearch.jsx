@@ -1,26 +1,13 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { GoSearch } from "react-icons/go";
-import { useGlobalContext } from "@/context";
 import { Field } from "formik";
 
 function LiveSearch({ data }) {
-  const [countries, setCountries] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
   const [open, setIsOpen] = useState(false);
-  const { setChoosenPill } = useGlobalContext();
-  console.log("ok");
-  setChoosenPill(selected);
-  data = selected;
-  useEffect(() => {
-    fetch("https://vitainline.uz/api/v1/pills")
-      .then((res) => res.json())
-      .then((data) => {
-        setCountries(data);
-      });
-  }, []);
-
+  console.log(data);
   return (
     <div className="w-100% font-medium">
       <div
@@ -55,7 +42,7 @@ function LiveSearch({ data }) {
             className="outline-none w-[130px] placeholder:text-gray-300 font-[400] p-2"
           />
         </div>
-        {countries?.data?.map((item) => {
+        {data?.data?.map((item) => {
           return (
             <Field key={item.title}>
               {({ form }) => {

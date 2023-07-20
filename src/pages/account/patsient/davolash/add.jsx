@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import img from "../../../../images/cite-logo.png";
 import { FiChevronDown } from "react-icons/fi";
@@ -8,8 +8,6 @@ import { useRouter } from "next/router";
 import { BsArrowLeft } from "react-icons/bs";
 import { BsCheck2 } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
-import { BiChevronDown } from "react-icons/bi";
-import { AiOutlineSearch } from "react-icons/ai";
 import { BsClock } from "react-icons/bs";
 import { IoIosClose } from "react-icons/io";
 import { Formik, Form, FieldArray, Field, useFormik } from "formik";
@@ -17,24 +15,34 @@ import { RxCross2 } from "react-icons/rx";
 import { GrSubtract } from "react-icons/gr";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-import { resolve } from "styled-jsx/css";
-import LiveSearch from "@/components/Davolash/LiveSearch";
-import { useGlobalContext } from "@/context";
-import { useEffect } from "react";
+import dynamic from "next/dynamic";
+const DynamicHeader = dynamic(
+  () => import("@/components/Davolash/LiveSearch"),
+  {
+    ssr: false,
+  }
+);
 export async function getStaticProps({ locale }) {
+  let pills;
+  const res = await fetch("https://vitainline.uz/api/v1/pills");
+  pills = await res.json();
+  console.log(pills);
   return {
     props: {
       ...(await serverSideTranslations(locale, ["add", "account"])),
+      pills,
     },
   };
 }
 
-function Add() {
+function Add({ pills }) {
+  console.log(pills);
   const { t } = useTranslation();
   const router = useRouter();
   const [drugsNum, setDrugsNum] = useState(4);
   const [numberEatDrug, setNumberEatDrug] = useState([1]);
-  const { choosenPill } = useGlobalContext();
+  const [token, setToken] = useState("");
+  const [patId, setPatId] = useState("");
   const initialValues = {
     healings: [
       {
@@ -48,10 +56,8 @@ function Add() {
     ],
   };
   const onSubmit = async (values) => {
-    let token = localStorage.getItem("token");
-    let id = localStorage.getItem("patId");
     delete values.quantity;
-    values.patientId = id;
+    values.patientId = patId;
     const response = await fetch("https://vitainline.uz/api/v1/healings", {
       method: "POST",
       headers: {
@@ -61,7 +67,7 @@ function Add() {
       body: JSON.stringify(values),
     });
     if (response.status == 200 || response.status == 201) {
-      window.location.pathname = "/account/patsient/davolash";
+      location.pathname = "/account/patsient/davolash";
     }
   };
   const formik = useFormik({
@@ -99,6 +105,12 @@ function Add() {
   };
 
   useEffect(() => {
+    let value;
+    let itemId;
+    value = localStorage.getItem("token") || "";
+    setToken(value);
+    itemId = localStorage.getItem("patId") || "";
+    setPatId(itemId);
     setDrugsNum(drugsNum);
   }, [drugsNum]);
 
@@ -193,7 +205,7 @@ function Add() {
                                   {t("add:tool")}
                                 </div>
                                 <div className="text-[14px] text-[#759495]  h-100%  font-[400] w-[200px]  p-2 ">
-                                  <LiveSearch />
+                                  <DynamicHeader data={pills} />
                                 </div>
                               </div>
 

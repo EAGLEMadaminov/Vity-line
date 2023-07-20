@@ -46,10 +46,8 @@ export default function Register(props) {
   const EnterAppBtn = async (e) => {
     setIsSubmit(false);
     if (((e.target.name === "password") === e.target.name) === "password2") {
-      console.log("second password wrong");
     }
     delete formInfo["password2"];
-    console.log(formInfo);
     e.preventDefault();
     response = await fetch("https://vitainline.uz/api/v1/auth/signup/doctor", {
       method: "POST",
@@ -62,7 +60,7 @@ export default function Register(props) {
     const info = await response.json();
     if (response.status == 201) {
       localStorage.setItem("info", JSON.stringify(formInfo));
-      window.location.pathname = "account";
+      location.pathname = "account";
     }
   };
 
@@ -94,7 +92,10 @@ export default function Register(props) {
         <div className="absolute bg-[url('../images/respons_logo.png')] w-[200px] h-[128px] left-[80px] top-[300px] bg-no-repeat md:w-0"></div>
         <div className=" bg-[url('../images/young-doctor1.png')] w-0 md:w-[1020px] lg:w-[1230px] h-[115vh] mx-auto bg-no-repeat  left-0 bottom-0 "></div>
       </div>
-      <form className="mt-[20px] text-[12px] w-[100vw] mx-[400px]" id="form-data">
+      <form
+        className="mt-[20px] text-[12px] w-[100vw] mx-[400px]"
+        id="form-data"
+      >
         <div className="w-[300px] md:w-[350px] lg:w-[450px]">
           <h1 className="text-[24px] text-center font-[500] text-[#1B3B3C] ">
             {t("register:register_list")}
