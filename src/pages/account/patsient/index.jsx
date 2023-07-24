@@ -46,7 +46,7 @@ function Patsient() {
       } catch (error) {
         console.log(error);
       }
-      console.log(singResponse.status);
+      // console.log(singResponse.status);
       setPatsientInfo(jsonData.data);
     }
   };

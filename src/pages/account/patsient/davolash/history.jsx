@@ -27,7 +27,6 @@ function Davolash() {
   const router = useRouter();
   const [hasInfo, setHasInfo] = useState(false);
   const [hillInfo, setHilInfo] = useState("");
-  const [token, setToken] = useState("");
 
   const GoToBackBtn = () => {
     router.push("/account/patsient/davolash");
@@ -49,29 +48,27 @@ function Davolash() {
     }
   };
 
-  const fetchFunck = async () => {
-    setHasInfo(false);
-    const response = await fetch(
-      `https://vitainline.uz/api/v1/healings/patient?type=history`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const jsonData = await response.json();
-
-    if (response.status === 200) {
-      setHilInfo(jsonData);
-      setHasInfo(true);
-    }
-  };
   useEffect(() => {
-    let value;
-    value = localStorage.getItem("ptoken");
-    setToken(value);
+    let token = localStorage.getItem("ptoken");
+    const fetchFunck = async () => {
+      setHasInfo(false);
+      const response = await fetch(
+        `https://vitainline.uz/api/v1/healings/patient?type=history`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const jsonData = await response.json();
+
+      if (response.status === 200) {
+        setHilInfo(jsonData);
+        setHasInfo(true);
+      }
+    };
     fetchFunck();
   }, []);
 

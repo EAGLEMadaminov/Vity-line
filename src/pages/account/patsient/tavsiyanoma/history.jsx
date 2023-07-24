@@ -25,38 +25,31 @@ function TavsiyanomaHistory() {
   const { t } = useTranslation();
   const [allRecom, setAllRecom] = useState("");
   const [hasInfo, setHasInfo] = useState(false);
-  const [token, setToken] = useState("");
-  const [recomId, setRecomId] = useState("");
 
   const router = useRouter();
 
-  const fetchFunck = async () => {
-    setHasInfo(false);
-    let id = recomId;
-    const singResponse = await fetch(
-      `https://vitainline.uz/api/v1/recommendations/patient?type=history`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    const jsonData = await singResponse.json();
-    setAllRecom(jsonData);
-
-    if (singResponse.status === 200) {
-      setHasInfo(true);
-    }
-  };
   useEffect(() => {
-    let value;
-    let itemId;
-    value = localStorage.getItem("ptoken") || "";
-    setToken(value);
-    itemId = localStorage.getItem("tavsiyaId") || "";
-    setRecomId(itemId);
+    let token = localStorage.getItem("ptoken") || "";
+    const fetchFunck = async () => {
+      setHasInfo(false);
+
+      const singResponse = await fetch(
+        `https://vitainline.uz/api/v1/recommendations/patient?type=history`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const jsonData = await singResponse.json();
+      setAllRecom(jsonData);
+
+      if (singResponse.status === 200) {
+        setHasInfo(true);
+      }
+    };
     fetchFunck();
   }, []);
 

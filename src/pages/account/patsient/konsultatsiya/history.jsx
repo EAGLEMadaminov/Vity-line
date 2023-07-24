@@ -71,7 +71,7 @@ function History() {
     value = localStorage.getItem("ptoken") || "";
     setToken(value);
     fetchFunck();
-  }, []);
+  }, [value]);
 
   return (
     <div className="h-[100vh]  bg-[#F7FEFE]">
