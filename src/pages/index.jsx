@@ -77,19 +77,19 @@ export default function Home(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex overflow-auto login-page ">
-        <div className="w-[100vw]">
-          <div className=" w-[350px] lg:w-full mx-auto relative">
-            <span className=" absolute bg-[url('../images/top-left.png')] bg-cover left-[56px] top-[80px] sm:bg-center w-[100px] md:w-[250px] sm:h-[316] h-[125px] md:left-[24px] md:top-[86px] bg-no-repeat"></span>
-            <span className="absolute bg-[url('../images/top-bottom.png')] left-[250px] top-[500px] bg-cover w-[120px] h-[130px]  lg:left-[56px] lg:top-[323px] bg-no-repeat"></span>
+      <div className="flex overflow-auto login-page  w-[100vw]">
+        <div className="">
+          <div className=" w-[250px] lg:w-auto mx-auto relative">
+            <span className=" absolute bg-[url('../images/top-left.png')] bg-cover left-[56px] top-[40px] sm:bg-center w-[100px] md:w-[250px] sm:h-[316] h-[125px] md:left-[px] md:top-[0px] bg-no-repeat"></span>
+            <span className="absolute bg-[url('../images/top-bottom.png')] left-[250px] top-[300px] bg-cover w-[120px] h-[130px]  lg:left-[56px] lg:top-[323px] bg-no-repeat"></span>
             <span className="absolute bg-[url('../images/middle.png')]  bg-cover w-0 h-[130px] left-5 lg:left-[471px] lg:top-[54px] bg-no-repeat "></span>
-            <span className=" absolute  bg-[url('../images/top-right.png')] top-[60px] bg-cover w-[120px] h-[130px] right-3 lg:left-[676px] lg:top-[32px] bg-no-repeat"></span>
-            <span className=" absolute  bg-[url('../images/top-right.png')] md:w-0 bg-cover w-[120px] top-[500px] left-8 h-[130px] right-3 lg:left-[676px] lg:top-[32px] bg-no-repeat"></span>
+            {/* <span className=" absolute  bg-[url('../images/top-right.png')] top-[60px] bg-cover w-[120px] h-[130px]  lg:left-[676px] lg:top-[32px] bg-no-repeat"></span> */}
+            <span className=" absolute  bg-[url('../images/top-right.png')] md:w-0 bg-cover w-[120px] top-[500px]  h-[130px] right-3  lg:top-[32px] bg-no-repeat"></span>
           </div>
-          <div className=" bg-[url('../images/young-doctor1.png')] w-0 md:w-[1020px] lg:w-[100vw] bg-cover h-[100vh] mx-auto bg-no-repeat  left-0 bottom-0 "></div>
+          <div className=" bg-[url('../images/young-doctor1.png')] w-0 md:w-[50vw]  bg-cover h-[100vh] mx-auto bg-no-repeat  left-0 bottom-0 "></div>
         </div>
 
-        <div className="ml-[200px] mr-[250px] w-[100vw] flex flex-col justify-center items-center">
+        <div className=" w-[100vw] flex flex-col justify-center items-center">
           <div className="border relative flex items-center justify-center border-[#C5D7D8] rounded-full bg-white w-[123px] h-[123px] mt-[10px] ">
             <span className="bg-[url('../images/Frame.png')] bg-contain w-[90px] h-[85px] bg-no-repeat absolute"></span>
           </div>
@@ -162,7 +162,7 @@ export default function Home(props) {
               </button>
             </form>
           </div>
-          <div className="flex lg:ml-[850px] w-[111px] h-[36px] dark:text-[#1B3B3C] items-center relative justify-between border border-[#D7E6E7] px-2 rounded-[12px]">
+          <div className="flex  w-[111px] h-[36px] dark:text-[#1B3B3C] items-center relative justify-between border border-[#D7E6E7] px-2 rounded-[12px]">
             <CiGlobe className="text-[#1BB7B5] text-xl" />
             <select
               onChange={ChangeLangBtn}
