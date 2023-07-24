@@ -76,7 +76,7 @@ function Account() {
     }
   };
   const handleExit = () => {
-    router.pathname = "";
+    window.location.pathname = "";
   };
   const handleChangeInput = async (e) => {
     const { name, value } = e.target;

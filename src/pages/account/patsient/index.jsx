@@ -181,7 +181,7 @@ function Patsient() {
             <h2 className="font-[500] text-[24px] text-[#1B3B3C] ">
               {t("account:pattsient_btn")}
             </h2>
-            <div className="flex justify-between w-full">
+            <div className="flex justify-around w-full">
               <Link
                 className="w-[305px] p-2 flex items-center rounded-[12px] shadow-[0px_6px_16px_#EFF4F4]"
                 href="/account/patsient/davolash"
@@ -198,7 +198,7 @@ function Patsient() {
                 <p className="dark:text-[#1B3B3C]">{t("account:recom")} </p>
                 <FiChevronRight className="text-[#759495] ml-auto" />
               </Link>
-              <button
+              {/* <button
                 className=" w-[305px] ml-5 p-2 flex  items-center rounded-[12px] shadow-[0px_6px_16px_#EFF4F4]"
                 onClick={handleKonsultant}
               >
@@ -207,7 +207,7 @@ function Patsient() {
                   {t("account:consultant")}{" "}
                 </p>
                 <FiChevronRight className="text-[#759495] ml-auto" />
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
