@@ -26,7 +26,7 @@ export async function getStaticProps({ locale }) {
 
 function Patsient() {
   const { t } = useTranslation();
-  const { registerInfo, patsientInfo, setPatsientInfo } = useGlobalContext();
+  const { patsientInfo, setPatsientInfo } = useGlobalContext();
   const [token, setToken] = useState("");
   const router = useRouter();
 
