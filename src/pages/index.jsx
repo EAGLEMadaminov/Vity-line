@@ -78,8 +78,8 @@ export default function Home(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex overflow-auto login-page">
-        <div className="bg-[#E6F0F3] ">
+      <div className="flex overflow-auto w-full login-page">
+        <div className="bg-[#E6F0F3] w-full ">
           <div className=" w-[350px] lg:w-full mx-auto relative">
             <span className=" absolute bg-[url('../images/top-left.png')] bg-cover left-[56px] top-[80px] sm:bg-center w-[100px] md:w-[250px] sm:h-[316] h-[125px] md:left-[24px] md:top-[86px] bg-no-repeat"></span>
             <span className="absolute bg-[url('../images/top-bottom.png')] left-[250px] top-[500px] bg-cover w-[120px] h-[130px]  lg:left-[56px] lg:top-[323px] bg-no-repeat"></span>
