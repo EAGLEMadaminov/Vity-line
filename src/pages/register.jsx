@@ -83,7 +83,7 @@ export default function Register(props) {
       <div className="w-[100vw] ">
         <div className=" w-[350px] lg:w-[50vh] mx-auto relative">
           <span className=" absolute bg-[url('../images/top-left.png')] bg-cover left-[56px] top-[80px] sm:bg-center w-[100px] md:w-[250px] sm:h-[316] h-[125px] md:left-[24px] md:top-[46px] bg-no-repeat"></span>
-          <span className="absolute bg-[url('../images/top-bottom.png')] left-[-100px] top-[400px] bg-cover w-[120px] h-[130px]   lg:top-[200px] bg-no-repeat"></span>
+          <span className="absolute bg-[url('../images/top-bottom.png')] left-[-200px] top-[400px] bg-cover w-[120px] h-[130px]   lg:top-[200px] bg-no-repeat"></span>
           <span className="absolute bg-[url('../images/middle.png')]  bg-cover w-0 h-[130px] left-5 lg:left-[471px] lg:top-[54px] bg-no-repeat "></span>
           <span className=" absolute  bg-[url('../images/top-right.png')] top-[60px] bg-cover w-[120px] h-[130px]   lg:top-[32px] lg:right-[300px] bg-no-repeat"></span>
           <span className=" absolute  bg-[url('../images/top-right.png')] md:w-0 bg-cover w-[120px] top-[500px] left-8 h-[130px] lg:right-[200px] lg:top-[32px] bg-no-repeat"></span>
@@ -91,7 +91,7 @@ export default function Register(props) {
         <div className="absolute bg-[url('../images/respons_logo.png')] w-[200px] h-[128px] left-[80px] top-[300px] bg-no-repeat md:w-0"></div>
         <div className="bg-[url('../images/young-doctor1.png')] w-0  lg:w-[50vw] bg-cover h-[115vh]  bg-no-repeat  left-0 bottom-0 "></div>
       </div>
-      <form className="mt-[20px] mr-[120px] text-[12px] " id="form-data">
+      <form className="mt-[20px] mx-[120px] text-[12px] " id="form-data">
         <div className=" lg:w-[350px]">
           <h1 className="text-[24px] text-center font-[500] text-[#1B3B3C] ">
             {t("register:register_list")}

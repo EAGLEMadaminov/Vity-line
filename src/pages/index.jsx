@@ -161,7 +161,7 @@ export default function Home(props) {
               </button>
             </form>
           </div>
-          <div className="flex ml-[450px] mt-2  w-[111px] h-[36px] dark:text-[#1B3B3C] items-center relative justify-between border border-[#D7E6E7] px-2 rounded-[12px]">
+          <div className="flex ml-[450px] mt-14  w-[111px] h-[36px] dark:text-[#1B3B3C] items-center relative justify-between border border-[#D7E6E7] px-2 rounded-[12px]">
             <CiGlobe className="text-[#1BB7B5] text-xl" />
             <select
               onChange={ChangeLangBtn}
