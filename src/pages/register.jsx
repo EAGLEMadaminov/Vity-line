@@ -91,7 +91,7 @@ export default function Register(props) {
         <div className="absolute bg-[url('../images/respons_logo.png')] w-[200px] h-[128px] left-[80px] top-[300px] bg-no-repeat md:w-0"></div>
         <div className="bg-[url('../images/young-doctor1.png')] w-0  lg:w-[50vw] bg-cover h-[115vh]  bg-no-repeat  left-0 bottom-0 "></div>
       </div>
-      <form className="mt-[20px] mr-[150px] text-[12px] " id="form-data">
+      <form className="mt-[20px] flex justify-center w-[100vw] text-[12px] " id="form-data">
         <div className=" lg:w-[350px]">
           <h1 className="text-[24px] text-center font-[500] text-[#1B3B3C] ">
             {t("register:register_list")}
