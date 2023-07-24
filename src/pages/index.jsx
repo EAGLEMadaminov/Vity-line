@@ -78,8 +78,8 @@ export default function Home(props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="flex overflow-auto login-page">
-        <div className="bg-[#E6F0F3] ">
+      <div className="flex overflow-auto login-page ">
+        <div className="w-[100vw]">
           <div className=" w-[350px] lg:w-full mx-auto relative">
             <span className=" absolute bg-[url('../images/top-left.png')] bg-cover left-[56px] top-[80px] sm:bg-center w-[100px] md:w-[250px] sm:h-[316] h-[125px] md:left-[24px] md:top-[86px] bg-no-repeat"></span>
             <span className="absolute bg-[url('../images/top-bottom.png')] left-[250px] top-[500px] bg-cover w-[120px] h-[130px]  lg:left-[56px] lg:top-[323px] bg-no-repeat"></span>
@@ -87,15 +87,14 @@ export default function Home(props) {
             <span className=" absolute  bg-[url('../images/top-right.png')] top-[60px] bg-cover w-[120px] h-[130px] right-3 lg:left-[676px] lg:top-[32px] bg-no-repeat"></span>
             <span className=" absolute  bg-[url('../images/top-right.png')] md:w-0 bg-cover w-[120px] top-[500px] left-8 h-[130px] right-3 lg:left-[676px] lg:top-[32px] bg-no-repeat"></span>
           </div>
-          <div className="absolute bg-[u rl('../images/respons_logo.png')] w-[200px] h-[128px] left-[80px] top-[300px] bg-no-repeat md:w-0"></div>
-          <div className=" bg-[url('../images/young-doctor1.png')] w-0 md:w-[1020px] lg:w-[100vw] h-[100vh] mx-auto bg-no-repeat  left-0 bottom-0 "></div>
+          <div className=" bg-[url('../images/young-doctor1.png')] w-0 md:w-[1020px] lg:w-[100vw] bg-cover h-[100vh] mx-auto bg-no-repeat  left-0 bottom-0 "></div>
         </div>
 
-        <div className="ml-[180px] mr-[235px] w-[100vw] flex flex-col justify-center items-center">
-          <div className="border relative flex items-center justify-center border-[#C5D7D8] rounded-full bg-white w-[123px] h-[123px] mt-[50px] ">
+        <div className="ml-[200px] mr-[250px] w-[100vw] flex flex-col justify-center items-center">
+          <div className="border relative flex items-center justify-center border-[#C5D7D8] rounded-full bg-white w-[123px] h-[123px] mt-[10px] ">
             <span className="bg-[url('../images/Frame.png')] bg-contain w-[90px] h-[85px] bg-no-repeat absolute"></span>
           </div>
-          <div className="flex flex-col items-center w-[300px] md:w-[400px] lg:w-[397px]  ">
+          <div className="flex flex-col items-center w-[300px] md:w-[400px] lg:w-[397px] mt-5 ">
             <h2 className="text-[24px] text-center w-[213px] text-[Black] mx-auto font-[500] leading-[38px]">
               {t("home:enter_system")} <span className="text-[#1BB7B5]"></span>
             </h2>
