@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BiChevronRight } from "react-icons/bi";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -21,8 +21,7 @@ export default function Register(props) {
   const [formErrors, setFormErrors] = useState({});
   const [show, setShow] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const { registerInfo, setRegisterInfo, setFormInfo, formInfo } =
-    useGlobalContext();
+  const { setRegisterInfo, setFormInfo, formInfo } = useGlobalContext();
 
   let response;
   const formSubmit = (e) => {

@@ -58,9 +58,6 @@ function Patsient() {
 
   fetchFunck();
 
-  const handleKonsultant = () => {
-    // router.push("/account/patsient/konsultatsiya");
-  };
   const handleExit = () => {
     window.location.pathname = "";
   };

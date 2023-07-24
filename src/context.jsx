@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
-import { registerLocale } from "react-datepicker";
+import React, { useContext, useState } from "react";
 
 const Appcontext = React.createContext();
 

@@ -8,9 +8,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { RxCounterClockwiseClock } from "react-icons/rx";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsClock } from "react-icons/bs";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
 import { useRouter } from "next/router";
-import { BiChevronRight } from "react-icons/bi";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
@@ -25,10 +23,8 @@ export async function getStaticProps({ locale }) {
 function Tavsiyanoma() {
   const { t } = useTranslation();
   const router = useRouter();
-  const [showForm, setShowForm] = useState(false);
   const [recomData, setRecomData] = useState("");
   const [hasInfo, setHasInfo] = useState(false);
-  let sortInfo = [];
   const fetchFunck = async () => {
     const token = localStorage.getItem("ptoken");
     const response = await fetch(

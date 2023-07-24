@@ -6,12 +6,10 @@ import { RxExit } from "react-icons/rx";
 import { CiGlobe } from "react-icons/ci";
 import { BsArrowLeft } from "react-icons/bs";
 import { RxCounterClockwiseClock } from "react-icons/rx";
-import { AiOutlinePlus } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { BsClock } from "react-icons/bs";
-import { AiOutlineExclamationCircle } from "react-icons/ai";
 
 export async function getStaticProps({ locale }) {
   return {

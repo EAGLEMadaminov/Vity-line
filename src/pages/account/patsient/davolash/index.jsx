@@ -34,7 +34,6 @@ function Davolash() {
   const { showModal, setShowModal } = useGlobalContext();
   const [hasInfo, setHasInfo] = useState(false);
   const [hillInfo, setHillInfo] = useState("");
-  // const [token, setToken] = useState("");
 
   const router = useRouter();
 
@@ -78,9 +77,6 @@ function Davolash() {
     }
   };
   useEffect(() => {
-    // let value;
-    // value = localStorage.getItem("ptoken") || "";
-    // setToken(value);
     fetchFunck();
   }, []);
 

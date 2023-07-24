@@ -13,7 +13,6 @@ import { IoIosClose } from "react-icons/io";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { FieldArray, useFormik, Formik, Form, Field } from "formik";
-import { useGlobalContext } from "@/context";
 
 export async function getStaticProps({ locale }) {
   return {

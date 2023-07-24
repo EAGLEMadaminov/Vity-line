@@ -7,7 +7,6 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { useGlobalContext } from "@/context.jsx";
 import { useForm } from "react-hook-form";
-import dynamic from "next/dynamic";
 export async function getStaticProps({ locale }) {
   return {
     props: {
@@ -21,7 +20,7 @@ export default function Home(props) {
   const router = useRouter();
   const [inputType, setInputType] = useState("password");
   const [resInfo, setResInfo] = useState("");
-  const { formInfo, setFormInfo } = useGlobalContext();
+  const { setFormInfo } = useGlobalContext();
   const { register, handleSubmit } = useForm();
 
   const handleEnterList = (e) => {
