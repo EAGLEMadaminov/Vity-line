@@ -110,6 +110,7 @@ export default function Home(props) {
               id="my-awesome-dropzone"
               onSubmit={handleSubmit(onSubmit)}
               method="POST"
+              netlify
             >
               <label htmlFor="login" className="mt-[10px] mb-2 text-[#759495]">
                 {t("home:login")}

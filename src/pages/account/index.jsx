@@ -43,27 +43,29 @@ function Account() {
     setLangValue("ru");
   }
 
-  const fetchFunck = async () => {
+  useEffect(() => {
     let token = localStorage.getItem("token");
+    const fetchFunck = async () => {
+      const singResponse = await fetch(
+        "https://vitainline.uz/api/v1/auth/user",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const jsonData = await singResponse.json();
 
-    const singResponse = await fetch("https://vitainline.uz/api/v1/auth/user", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const jsonData = await singResponse.json();
-
-    if (registerInfo === "") {
-      setFormInfo(jsonData.data);
-    } else {
-      setFormInfo(registerInfo);
-    }
-  };
-
-  fetchFunck();
+      if (registerInfo === "") {
+        setFormInfo(jsonData.data);
+      } else {
+        setFormInfo(registerInfo);
+      }
+    };
+    fetchFunck();
+  });
 
   const ChangeLangBtn = (e) => {
     let lang = e.target.value;
