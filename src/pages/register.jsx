@@ -47,6 +47,7 @@ export default function Register(props) {
     if (((e.target.name === "password") === e.target.name) === "password2") {
     }
     delete formInfo["password2"];
+    formInfo.passport = formInfo.passport.toUpperCase();
     e.preventDefault();
     response = await fetch("https://vitainline.uz/api/v1/auth/signup/doctor", {
       method: "POST",
@@ -59,7 +60,7 @@ export default function Register(props) {
     const info = await response.json();
     if (response.status == 201) {
       localStorage.setItem("info", JSON.stringify(formInfo));
-      location.pathname = "account";
+      location.pathname = "";
     }
   };
 
@@ -91,7 +92,10 @@ export default function Register(props) {
         <div className="absolute bg-[url('../images/respons_logo.png')] w-[200px] h-[128px] left-[80px] top-[300px] bg-no-repeat md:w-0"></div>
         <div className="bg-[url('../images/young-doctor1.png')] w-0  lg:w-[50vw] bg-cover h-[115vh]  bg-no-repeat  left-0 bottom-0 "></div>
       </div>
-      <form className="mt-[20px] flex justify-center w-[100vw] text-[12px] " id="form-data">
+      <form
+        className="mt-[20px] flex justify-center w-[100vw] text-[12px] "
+        id="form-data"
+      >
         <div className=" lg:w-[350px]">
           <h1 className="text-[24px] text-center font-[500] text-[#1B3B3C] ">
             {t("register:register_list")}
@@ -210,7 +214,7 @@ export default function Register(props) {
                   value={formInfo.passport}
                   onChange={handleChange}
                   placeholder="(AA 2314658)"
-                  className="outline-none rounded-[12px] boder-[#D7E6E7] border p-2 bg-[#F8FCFC] focus:bg-white focus:border-[#C5D7D8] dark:bg-white dark:text-black"
+                  className="outline-none  rounded-[12px] uppercase boder-[#D7E6E7] border p-2 bg-[#F8FCFC] focus:bg-white focus:border-[#C5D7D8] dark:bg-white dark:text-black"
                 />
                 <p>{formErrors.passport}</p>
                 <label htmlFor="province" className="mt-3">
@@ -304,5 +308,3 @@ export default function Register(props) {
     </div>
   );
 }
-
-
