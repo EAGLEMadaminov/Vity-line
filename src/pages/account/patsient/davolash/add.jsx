@@ -43,6 +43,7 @@ function Add({ pills }) {
   const [numberEatDrug, setNumberEatDrug] = useState([1]);
   const [token, setToken] = useState("");
   const [patId, setPatId] = useState("");
+  const [loading, setLoading] = useState(false);
   const initialValues = {
     healings: [
       {
@@ -56,6 +57,17 @@ function Add({ pills }) {
     ],
   };
   const onSubmit = async (values) => {
+    setLoading(true);
+    if (
+      values.pill === "" ||
+      values.quantity === 0 ||
+      values.type === "" ||
+      values.period === "" ||
+      values.extraInformation === ""
+    ) {
+      setLoading(false);
+      return;
+    }
     delete values.quantity;
     values.patientId = patId;
     const response = await fetch("https://vitainline.uz/api/v1/healings", {
@@ -66,7 +78,9 @@ function Add({ pills }) {
       },
       body: JSON.stringify(values),
     });
+
     if (response.status == 200 || response.status == 201) {
+      setLoading(false);
       location.pathname = "/account/patsient/davolash";
     }
   };
@@ -407,6 +421,15 @@ function Add({ pills }) {
             </FieldArray>
           </Form>
         </Formik>
+        {loading ? (
+          <div className="flex justify-center absolute bottom-16 left-[50%] ">
+            <div className="dot  animate-loader "></div>
+            <div className="dot animate-loader animation-delay-200"></div>
+            <div className="dot animate-loader animation-delay-400"></div>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

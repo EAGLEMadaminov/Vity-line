@@ -28,6 +28,7 @@ function Rengen() {
   const [numberEatDrug, setNumberEatDrug] = useState([1]);
   const [token, setToken] = useState("");
   const [id, setId] = useState("");
+  const [loading, setLoading] = useState(false);
   const initialValues = {
     title: "",
     description: "",
@@ -37,6 +38,15 @@ function Rengen() {
   const onSubmit = async (values) => {
     if (id && token) {
       values.patientId = id;
+      setLoading(true);
+      if (
+        values.description === "" ||
+        values.title == "" ||
+        values.duration == "" ||
+        values.times === [""]
+      ) {
+        setLoading(false);
+      }
       const response = await fetch(
         "https://vitainline.uz/api/v1/recommendations",
         {
@@ -50,6 +60,7 @@ function Rengen() {
       );
       const info = await response.json();
       window.localStorage.setItem("tavsiyaId", info.data.id);
+      setLoading(false);
       if (response.status === 200) {
         window.location.pathname = "/account/patsient/tavsiyanoma";
       }
@@ -245,6 +256,15 @@ function Rengen() {
             </div>
           </Form>
         </Formik>
+        {loading ? (
+          <div className="flex justify-center absolute bottom-16 left-[50%]">
+            <div className="dot  animate-loader "></div>
+            <div className="dot animate-loader animation-delay-200"></div>
+            <div className="dot animate-loader animation-delay-400"></div>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
