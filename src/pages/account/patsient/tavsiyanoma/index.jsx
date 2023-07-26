@@ -55,6 +55,7 @@ function Tavsiyanoma() {
     router.push("/account/patsient");
   };
   const handleExit = () => {
+    localStorage.clear();
     window.location.pathname = "";
   };
 

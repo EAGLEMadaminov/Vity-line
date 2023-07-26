@@ -59,6 +59,7 @@ function Patsient() {
   fetchFunck();
 
   const handleExit = () => {
+    localStorage.clear();
     window.location.pathname = "";
   };
   const GoToBackBtn = () => {
@@ -195,16 +196,6 @@ function Patsient() {
                 <p className="dark:text-[#1B3B3C]">{t("account:recom")} </p>
                 <FiChevronRight className="text-[#759495] ml-auto" />
               </Link>
-              {/* <button
-                className=" w-[305px] ml-5 p-2 flex  items-center rounded-[12px] shadow-[0px_6px_16px_#EFF4F4]"
-                onClick={handleKonsultant}
-              >
-                <span className="block w-10 h-10 mr-2 rounded-[40px] bg-[#EAF9FB] bg-center bg-[url('../images/patsient/konsultant.png')] bg-no-repeat"></span>
-                <p className="dark:text-[#1B3B3C]">
-                  {t("account:consultant")}{" "}
-                </p>
-                <FiChevronRight className="text-[#759495] ml-auto" />
-              </button> */}
             </div>
           </div>
         </div>

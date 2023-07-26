@@ -32,6 +32,7 @@ function Davolash() {
     router.push("/account/patsient/davolash");
   };
   const handleExit = () => {
+    localStorage.clear();
     window.location.pathname = "";
   };
 

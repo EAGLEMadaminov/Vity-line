@@ -166,15 +166,6 @@ export default function Home(props) {
                 {t("home:autorization_btn")}
               </button>
             </form>
-            {loading ? (
-              <div className="flex justify-center">
-                <div className="dot  animate-loader "></div>
-                <div className="dot animate-loader animation-delay-200"></div>
-                <div className="dot animate-loader animation-delay-400"></div>
-              </div>
-            ) : (
-              ""
-            )}
           </div>
           <div className="flex ml-[450px] bottom-2 absolute  w-[111px] h-[36px] dark:text-[#1B3B3C] items-center  justify-between border border-[#D7E6E7] px-2 rounded-[12px]">
             <CiGlobe className="text-[#1BB7B5] text-xl" />
@@ -190,6 +181,17 @@ export default function Home(props) {
           </div>
         </div>
       </div>
+      {loading ? (
+        <div className="z-[2] absolute left-0 bottom-0 right-0 top-0 bg-[rgba(0,0,0,0.2)] ">
+          <div className="pl1">
+            <div className="pl1__a"></div>
+            <div className="pl1__b"></div>
+            <div className="pl1__c"></div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

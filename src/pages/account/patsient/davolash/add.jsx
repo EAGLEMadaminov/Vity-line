@@ -89,6 +89,7 @@ function Add({ pills }) {
     onSubmit,
   });
   const handleExit = () => {
+    localStorage.clear();
     router.pathname = "";
   };
 
@@ -422,10 +423,12 @@ function Add({ pills }) {
           </Form>
         </Formik>
         {loading ? (
-          <div className="flex justify-center absolute bottom-16 left-[50%] ">
-            <div className="dot  animate-loader "></div>
-            <div className="dot animate-loader animation-delay-200"></div>
-            <div className="dot animate-loader animation-delay-400"></div>
+          <div className="z-[2] absolute left-0 bottom-0 right-0 top-0 bg-[rgba(0,0,0,0.2)] ">
+            <div className="pl1">
+              <div className="pl1__a"></div>
+              <div className="pl1__b"></div>
+              <div className="pl1__c"></div>
+            </div>
           </div>
         ) : (
           ""

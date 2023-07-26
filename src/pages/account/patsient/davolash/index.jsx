@@ -41,6 +41,7 @@ function Davolash() {
     router.push("/account/patsient");
   };
   const handleExit = () => {
+    localStorage.clear();
     window.location.pathname = "";
   };
   const showFormBtn = () => {

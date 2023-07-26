@@ -55,6 +55,7 @@ function TavsiyanomaHistory() {
     router.push("/account/patsient/tavsiyanoma");
   };
   const handleExit = () => {
+    localStorage.clear();
     window.location.pathname = "";
   };
 

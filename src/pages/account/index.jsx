@@ -76,8 +76,10 @@ function Account() {
     }
   };
   const handleExit = () => {
+    localStorage.clear();
     window.location.pathname = "";
   };
+
   const handleChangeInput = async (e) => {
     const { name, value } = e.target;
     if ((e.target.name = "passport")) {
@@ -260,10 +262,12 @@ function Account() {
             )}
           </div>
           {loading ? (
-            <div className="flex justify-center">
-              <div className="dot animate-loader "></div>
-              <div className="dot animate-loader animation-delay-200"></div>
-              <div className="dot animate-loader animation-delay-400"></div>
+            <div className="z-[2] absolute left-0 bottom-0 right-0 top-0 bg-[rgba(0,0,0,0.2)] ">
+              <div className="pl1">
+                <div className="pl1__a"></div>
+                <div className="pl1__b"></div>
+                <div className="pl1__c"></div>
+              </div>
             </div>
           ) : (
             ""
