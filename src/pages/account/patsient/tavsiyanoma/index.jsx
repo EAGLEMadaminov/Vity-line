@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
+
 export async function getStaticProps({ locale }) {
   return {
     props: {
@@ -25,6 +26,7 @@ function Tavsiyanoma() {
   const router = useRouter();
   const [recomData, setRecomData] = useState("");
   const [hasInfo, setHasInfo] = useState(false);
+  const [loading, setLoading] = useState(true);
   const fetchFunck = async () => {
     const token = localStorage.getItem("ptoken");
     const response = await fetch(
@@ -48,6 +50,9 @@ function Tavsiyanoma() {
     fetchFunck();
   }, []);
 
+  setTimeout(() => {
+    setLoading(false);
+  }, 1000);
   const handleTavsiyahistoryBtn = () => {
     router.push("/account/patsient/tavsiyanoma/history");
   };
@@ -184,6 +189,17 @@ function Tavsiyanoma() {
           )}
         </div>
       </div>
+      {loading ? (
+        <div className="z-[2] absolute left-0 bottom-0 right-0 top-0 bg-[rgba(0,0,0,0.2)] ">
+          <div className="pl1">
+            <div className="pl1__a"></div>
+            <div className="pl1__b"></div>
+            <div className="pl1__c"></div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

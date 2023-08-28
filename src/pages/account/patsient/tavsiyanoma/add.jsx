@@ -8,12 +8,13 @@ import { useRouter } from "next/router";
 import { BsArrowLeft } from "react-icons/bs";
 import { BsCheck2 } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
-import { BsClock } from "react-icons/bs";
 import { IoIosClose } from "react-icons/io";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { FieldArray, useFormik, Formik, Form, Field } from "formik";
-
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import MuiTimePicker from "@/components/Tavsiyanoma/MuiTimePicker";
 export async function getStaticProps({ locale }) {
   return {
     props: {
@@ -46,6 +47,7 @@ function Rengen() {
         values.times === [""]
       ) {
         setLoading(false);
+        return;
       }
       const response = await fetch(
         "https://vitainline.uz/api/v1/recommendations",
@@ -113,7 +115,13 @@ function Rengen() {
         {/* head */}
         <div className="flex h-[60px] pt-9 justify-between">
           <div className="flex">
-            <Image src={img} width={50} height={50} alt="logo" />
+            <Image
+              src={img}
+              width={50}
+              height={50}
+              alt="logo"
+              className="w-auto h-auto"
+            />
             <p className="text-black font-[500]">
               Vita in <span className="text-[#57D0CF]">line</span>
             </p>
@@ -204,14 +212,12 @@ function Rengen() {
                                   <p className="mr-1">
                                     {index + 1}-{t("add:first_num")}
                                   </p>
-                                  <div className="border bg-white border-[#D7E6E7] rounded-[12px] w-[100px] h-[40px] flex items-center">
-                                    <BsClock className="text-[#1BB7B5] ml-3" />
-                                    <Field
-                                      type="time"
-                                      format="HH:mm"
-                                      name={`times[${index}]`}
-                                      className="w-9 h-3  outline-none dark:bg-white dark:text-black placeholder:text-[#C5D7D8]"
-                                    />
+                                  <div className=" bg-white  w-[140px] h-[40px] flex items-center">
+                                    <LocalizationProvider
+                                      dateAdapter={AdapterDateFns}
+                                    >
+                                      <MuiTimePicker index={index} />
+                                    </LocalizationProvider>
                                   </div>
                                   <button
                                     type="button"

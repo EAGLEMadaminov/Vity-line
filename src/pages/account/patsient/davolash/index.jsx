@@ -35,6 +35,7 @@ function Davolash() {
   const [hasInfo, setHasInfo] = useState(false);
   const [hillInfo, setHillInfo] = useState("");
   const [loading, setLoading] = useState(true);
+  const [itemInfo, setItemInfo] = useState({});
 
   const router = useRouter();
 
@@ -166,10 +167,12 @@ function Davolash() {
               {hillInfo.data.map((item, index) => {
                 return (
                   <div key={index} className="flex mx-2 mt-5 mb-20">
-                    {showModal ? <DynamicModal /> : ""}
+                    {showModal ? <DynamicModal data={itemInfo} /> : ""}
                     <div
                       className="border rounded-[12px] p-3 flex shadow-[0px_6px_16px] shadow-[#EFF4F4] flex-col w-[305px] cursor-pointer "
-                      onClick={showFormBtn}
+                      onClick={() => {
+                        setShowModal(true), setItemInfo(hillInfo.data[index]);
+                      }}
                     >
                       <div className="flex items-center mb-2">
                         <div className="bg-[url('../images/davolash/davolash-dori.png')] bg-no-repeat w-8 h-8"></div>

@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { Stack, TextField } from "@mui/material";
-
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { Field, FieldArray } from "formik";
 
-function MuiPicker({ index, idx }) {
+function MuiTimePicker({ index }) {
   const [selectedTime, setSelectedTime] = useState(null);
   return (
-    <Stack className="w-[105px] ">
+    <Stack>
       <FieldArray>
         {(props) => {
           const { form } = props;
           const { values } = form;
-          const { healings } = values;
+          const { times } = values;
           return (
             <TimePicker
               slots={{
@@ -20,7 +19,6 @@ function MuiPicker({ index, idx }) {
                   <TextField {...textFieldProps} />
                 ),
               }}
-              value={selectedTime}
               onChange={(newValue) => {
                 setSelectedTime(newValue);
                 let hour = newValue?.getHours();
@@ -32,8 +30,7 @@ function MuiPicker({ index, idx }) {
                   min = "00";
                 }
                 let time = hour + ":" + min;
-                console.log(time);
-                healings[index].times[idx] = time;
+                times[index] = time;
               }}
             />
           );
@@ -43,4 +40,4 @@ function MuiPicker({ index, idx }) {
   );
 }
 
-export default MuiPicker;
+export default MuiTimePicker;

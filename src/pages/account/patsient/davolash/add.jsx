@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import { BsArrowLeft } from "react-icons/bs";
 import { BsCheck2 } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
-import { BsClock } from "react-icons/bs";
 import { IoIosClose } from "react-icons/io";
 import { Formik, Form, FieldArray, Field, useFormik } from "formik";
 import { RxCross2 } from "react-icons/rx";
@@ -18,8 +17,6 @@ import { useTranslation } from "next-i18next";
 import dynamic from "next/dynamic";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import MuiPicker from "@/components/Davolash/MuiPicker";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { Stack } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 const DynamicHeader = dynamic(
@@ -48,7 +45,6 @@ function Add({ pills }) {
   const [token, setToken] = useState("");
   const [patId, setPatId] = useState("");
   const [loading, setLoading] = useState(false);
-  const [selectedTime, setSelectedTime] = useState(null);
 
   const initialValues = {
     healings: [
@@ -64,15 +60,19 @@ function Add({ pills }) {
   };
   const onSubmit = async (values) => {
     setLoading(true);
-    if (
-      values.pill === "" ||
-      values.quantity === 0 ||
-      values.type === "" ||
-      values.period === "" ||
-      values.extraInformation === ""
-    ) {
-      setLoading(false);
-      return;
+    let item;
+    for (let i = 0; i < values.healings.length; i++) {
+      item = values.healings[i];
+      if (
+        item.pill == "" ||
+        item.quantity == 0 ||
+        item.type == "" ||
+        item.period == "" ||
+        item.extraInformation == ""
+      ) {
+        setLoading(false);
+        return;
+      }
     }
     delete values.quantity;
     values.patientId = patId;
@@ -257,13 +257,6 @@ function Add({ pills }) {
                                                       {t("add:first_num")}
                                                     </p>
                                                     <div className=" h-[34px] flex my-2 justify-around items-center">
-                                                      {/* <BsClock className="text-[#1BB7B5]" />
-                                                      <Field
-                                                        type="time"
-                                                        format="HH:mm"
-                                                        name={`healings[${index}].times[${idx}]`}
-                                                        className="w-9 h-3  outline-none dark:bg-white  placeholder:text-[#C5D7D8]"
-                                                      /> */}
                                                       <LocalizationProvider
                                                         dateAdapter={
                                                           AdapterDateFns

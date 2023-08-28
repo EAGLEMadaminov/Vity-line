@@ -47,7 +47,6 @@ function Patsient() {
       } catch (error) {
         console.log(error);
       }
-      // console.log(singResponse.status);
       setPatsientInfo(jsonData.data);
     }
   };
@@ -57,10 +56,10 @@ function Patsient() {
     setToken(value);
   }, []);
 
+  fetchFunck();
   setTimeout(() => {
     setLoading(false);
   }, 1000);
-  fetchFunck();
 
   const handleExit = () => {
     localStorage.clear();
@@ -202,19 +201,19 @@ function Patsient() {
               </Link>
             </div>
           </div>
-          {loading ? (
-            <div className="z-[2] absolute left-0 bottom-0 right-0 top-0 bg-[rgba(0,0,0,0.2)] ">
-              <div className="pl1">
-                <div className="pl1__a"></div>
-                <div className="pl1__b"></div>
-                <div className="pl1__c"></div>
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
         </div>
       </div>
+      {loading ? (
+        <div className="z-[2] absolute left-0 bottom-0 right-0 top-0 bg-[rgba(0,0,0,0.2)] ">
+          <div className="pl1">
+            <div className="pl1__a"></div>
+            <div className="pl1__b"></div>
+            <div className="pl1__c"></div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
