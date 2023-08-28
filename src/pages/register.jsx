@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { useGlobalContext } from "@/context.jsx";
+import InputMask from "react-input-mask";
 
 export async function getStaticProps({ locale }) {
   return {
@@ -21,6 +22,7 @@ export default function Register(props) {
   const [formErrors, setFormErrors] = useState({});
   const [show, setShow] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const { setRegisterInfo, setFormInfo, formInfo } = useGlobalContext();
 
   let response;
@@ -44,8 +46,12 @@ export default function Register(props) {
 
   const EnterAppBtn = async (e) => {
     setIsSubmit(false);
-    if (((e.target.name === "password") === e.target.name) === "password2") {
+    if (formInfo.password !== formInfo.password2) {
+      console.log("teng emas");
+      setIsDisabled(true);
+      return;
     }
+
     delete formInfo["password2"];
     formInfo.passport = formInfo.passport.toUpperCase();
     e.preventDefault();
@@ -64,8 +70,14 @@ export default function Register(props) {
     }
   };
 
+  setTimeout(() => {
+    if (isDisabled) {
+      setIsDisabled(false);
+    }
+  }, 2000);
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     if (value === "") {
       if (window.location.pathname == "ru") {
         setRegisterInfo("Пожалуйста, заполните все поля.");
@@ -79,6 +91,11 @@ export default function Register(props) {
     setFormInfo({ ...formInfo, [name]: value });
   };
 
+  const formatChars = {
+    A: "[A-z]",
+    B: "[A-z]",
+    0: "[0-9]",
+  };
   return (
     <div className="bg-[#F7FEFE] flex login-page  overflow-auto h-[115vh] dark:bg-[#F7FEFE]">
       <div className="w-[100vw] ">
@@ -143,6 +160,7 @@ export default function Register(props) {
                   placeholder="************"
                   autoComplete="off"
                   required
+                  value={formInfo.password2}
                   onChange={handleChange}
                 />
                 <span
@@ -155,11 +173,23 @@ export default function Register(props) {
                 ></span>
               </div>
               <button
-                className="text-white w-full rounded-[12px] text-[16px] mt-3 py-2 bg-gradient-to-t from-[#1BB7B5] to-[#0EC5C9] font-[500] hover:bg-gradient-to-t hover:from-[#0F9694] hover:to-[#0A7476]"
+                className={`text-white w-full rounded-[12px] text-[16px] mt-3 py-2  font-[500] hover:bg-gradient-to-t ${
+                  isDisabled
+                    ? "bg-[#0A7476]"
+                    : "bg-gradient-to-t from-[#1BB7B5] to-[#0EC5C9]"
+                } hover:from-[#0F9694] hover:to-[#0A7476]`}
                 onClick={EnterAppBtn}
+                disabled={isDisabled}
               >
                 {t("register:bottom_btn")}
               </button>
+              {isDisabled ? (
+                <p className="text-red-500 text-[16px] text-center mt-4">
+                  Passwordni bir xil kiriting!
+                </p>
+              ) : (
+                ""
+              )}
             </div>
           ) : (
             <div className="">
@@ -207,9 +237,11 @@ export default function Register(props) {
                 <label htmlFor="passport" className="mt-3">
                   {t("register:passport")}
                 </label>
-                <input
+                <InputMask
                   type="text"
                   name="passport"
+                  mask="AB0000000"
+                  formatChars={formatChars}
                   required
                   value={formInfo.passport}
                   onChange={handleChange}
@@ -282,8 +314,9 @@ export default function Register(props) {
                 <label htmlFor="phone-num">{t("register:phone")}</label>
                 <div className="  rounded-[12px] boder-[#D7E6E7] dark:text-black border p-2 bg-[#F8FCFC] focus:bg-white focus:border-[#C5D7D8]">
                   +998
-                  <input
-                    type="number"
+                  <InputMask
+                    type="text"
+                    mask="(99) 999 99 99"
                     name="phone"
                     value={formInfo.phone}
                     onChange={handleChange}

@@ -7,6 +7,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { useGlobalContext } from "@/context.jsx";
 import { useForm } from "react-hook-form";
+import InputMask from "react-input-mask";
 export async function getStaticProps({ locale }) {
   return {
     props: {
@@ -31,6 +32,7 @@ export default function Home(props) {
   let info;
   const onSubmit = async (data) => {
     data.passport = data.passport.toUpperCase();
+    console.log(data.passport);
     setLoading(true);
     const response = await fetch(
       "https://vitainline.uz/api/v1/auth/signin/doctor",
@@ -73,6 +75,11 @@ export default function Home(props) {
     }
   };
 
+  const formatChars = {
+    A: "[A-z]",
+    B: "[A-z]",
+    0: "[0-9]",
+  };
   return (
     <div className="bg-[#F5FAFB] w-full">
       <Head>
@@ -116,9 +123,12 @@ export default function Home(props) {
               <label htmlFor="login" className="mt-[10px] mb-2 text-[#759495]">
                 {t("home:login")}
               </label>
-              <input
+              <InputMask
+                mask="AB0000000"
                 name="passport"
+                floatLabelType="Auto"
                 maxLength={10}
+                formatChars={formatChars}
                 className="border uppercase border-[#D7E6E7] rounded-[12px] p-2 dark:bg-white dark:text-black"
                 type="text"
                 {...register("passport", { required: true })}

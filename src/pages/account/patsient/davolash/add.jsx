@@ -16,6 +16,12 @@ import { GrSubtract } from "react-icons/gr";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import dynamic from "next/dynamic";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import MuiPicker from "@/components/Davolash/MuiPicker";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { Stack } from "@mui/material";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+
 const DynamicHeader = dynamic(
   () => import("@/components/Davolash/LiveSearch"),
   {
@@ -36,14 +42,14 @@ export async function getStaticProps({ locale }) {
 }
 
 function Add({ pills }) {
-  console.log(pills);
   const { t } = useTranslation();
   const router = useRouter();
-  const [drugsNum, setDrugsNum] = useState(4);
   const [numberEatDrug, setNumberEatDrug] = useState([1]);
   const [token, setToken] = useState("");
   const [patId, setPatId] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(null);
+
   const initialValues = {
     healings: [
       {
@@ -70,6 +76,7 @@ function Add({ pills }) {
     }
     delete values.quantity;
     values.patientId = patId;
+    console.log(values);
     const response = await fetch("https://vitainline.uz/api/v1/healings", {
       method: "POST",
       headers: {
@@ -90,21 +97,13 @@ function Add({ pills }) {
   });
   const handleExit = () => {
     localStorage.clear();
-    router.pathname = "";
+    window.location.pathname = "";
   };
 
   const GoToBackBtn = () => {
     router.push("/account/patsient/davolash");
   };
 
-  const subsNumBtn = () => {
-    if (drugsNum > 0) {
-      setDrugsNum(drugsNum - 1);
-    }
-  };
-  const addNumBtn = () => {
-    setDrugsNum(drugsNum + 1);
-  };
   const removeElement = (index) => {
     const newA = numberEatDrug.filter((_, i) => i !== index);
     setNumberEatDrug(newA);
@@ -126,8 +125,7 @@ function Add({ pills }) {
     setToken(value);
     itemId = localStorage.getItem("patId") || "";
     setPatId(itemId);
-    setDrugsNum(drugsNum);
-  }, [drugsNum]);
+  }, []);
 
   return (
     <div className=" min-h-[100vh] bg-[#F7FEFE]">
@@ -170,7 +168,6 @@ function Add({ pills }) {
         </div>
 
         {/* body  */}
-
         <Formik initialValues={initialValues} onSubmit={onSubmit}>
           <Form>
             <FieldArray name="healings">
@@ -259,14 +256,25 @@ function Add({ pills }) {
                                                       {idx + 1}-
                                                       {t("add:first_num")}
                                                     </p>
-                                                    <div className="border border-[#D7E6E7] rounded-[12px] w-[77px] h-[34px] flex  justify-around items-center">
-                                                      <BsClock className="text-[#1BB7B5]" />
+                                                    <div className=" h-[34px] flex my-2 justify-around items-center">
+                                                      {/* <BsClock className="text-[#1BB7B5]" />
                                                       <Field
                                                         type="time"
                                                         format="HH:mm"
                                                         name={`healings[${index}].times[${idx}]`}
-                                                        className="w-9 h-3  outline-none dark:bg-white dark:text-black placeholder:text-[#C5D7D8]"
-                                                      />
+                                                        className="w-9 h-3  outline-none dark:bg-white  placeholder:text-[#C5D7D8]"
+                                                      /> */}
+                                                      <LocalizationProvider
+                                                        dateAdapter={
+                                                          AdapterDateFns
+                                                        }
+                                                      >
+                                                        <MuiPicker
+                                                          data={healings}
+                                                          index={index}
+                                                          idx={idx}
+                                                        />
+                                                      </LocalizationProvider>
                                                     </div>
                                                     <button
                                                       type="button"
@@ -295,7 +303,17 @@ function Add({ pills }) {
                                   <button
                                     type="button"
                                     className="bg-white border ml-3  border-[#E9F6F6] rounded-[8px] w-8 h-8"
-                                    onClick={subsNumBtn}
+                                    onClick={(e) => {
+                                      setFieldValue(
+                                        "quantity",
+                                        group.quantity--
+                                      );
+                                      {
+                                        if (group.quantity <= 0) {
+                                          group.quantity = 0;
+                                        }
+                                      }
+                                    }}
                                   >
                                     <GrSubtract className="mx-auto" />
                                   </button>
@@ -303,7 +321,7 @@ function Add({ pills }) {
                                     name={`healings[${index}].quantity`}
                                     disabled
                                     value={group.quantity}
-                                    className=" ml-4 text-[#1B3B3C]  disabled:bg-transparent outline-none  rounded-[8px] w-8 h-8"
+                                    className="ml-4 text-[#1B3B3C] disabled:bg-transparent outline-none  rounded-[8px] w-8 h-8"
                                   />
                                   <button
                                     type="button"
@@ -334,7 +352,7 @@ function Add({ pills }) {
                                         id="radio1"
                                         name={`healings[${index}].type`}
                                         value="Ovqatdan oldin"
-                                        className=" dark:border-[#D7E6E7] brightness-150 active:brightness-150  hover:brightness-150 "
+                                        className="form-radio  bg-white brightness-150 active:brightness-150 hover:brightness-150"
                                       />
                                       <label
                                         htmlFor="radio1"
@@ -349,7 +367,7 @@ function Add({ pills }) {
                                         id="radio2"
                                         value="Ovqatdan keyin"
                                         name={`healings[${index}].type`}
-                                        className=" brightness-150  p-2 after:w-2 after:h-2 active:brightness-150  hover:brightness-150"
+                                        className="brightness-150 form-radio p-2 after:w-2 after:h-2 active:brightness-150 hover:brightness-150"
                                       />
                                       <label
                                         htmlFor="radio2"

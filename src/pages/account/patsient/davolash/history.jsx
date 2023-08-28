@@ -27,6 +27,7 @@ function Davolash() {
   const router = useRouter();
   const [hasInfo, setHasInfo] = useState(false);
   const [hillInfo, setHilInfo] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const GoToBackBtn = () => {
     router.push("/account/patsient/davolash");
@@ -72,7 +73,9 @@ function Davolash() {
     };
     fetchFunck();
   }, []);
-
+  setTimeout(() => {
+    setLoading(false);
+  }, 1000);
   return (
     <div className="min-h-[100vh]  bg-[#F7FEFE]">
       <div className="w-[1035px] mx-auto">
@@ -177,6 +180,18 @@ function Davolash() {
           )}
         </div>
       </div>
+
+      {loading ? (
+        <div className="z-[2] absolute left-0 bottom-0 right-0 top-0 bg-[rgba(0,0,0,0.2)] ">
+          <div className="pl1">
+            <div className="pl1__a"></div>
+            <div className="pl1__b"></div>
+            <div className="pl1__c"></div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

@@ -7,7 +7,6 @@ function LiveSearch({ data }) {
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
   const [open, setIsOpen] = useState(false);
-  console.log(data);
   return (
     <div className="w-100% font-medium">
       <div
@@ -39,7 +38,7 @@ function LiveSearch({ data }) {
             placeholder="Qidiruv"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value.toLowerCase())}
-            className="outline-none w-[130px] placeholder:text-gray-300 font-[400] p-2"
+            className="outline-none dark:bg-white dark:text-black w-[130px] placeholder:text-gray-300 font-[400] p-2"
           />
         </div>
         {data?.data?.map((item) => {

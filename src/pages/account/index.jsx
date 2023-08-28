@@ -14,6 +14,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useGlobalContext } from "@/context.jsx";
 import Link from "next/link";
+import InputMask from "react-input-mask";
 
 export async function getStaticProps({ locale }) {
   return {
@@ -31,7 +32,8 @@ function Account() {
   const [patsientName, setPatsientName] = useState("");
   const [showInfo, setShowInfo] = useState(false);
   const [langValue, setLangValue] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [incorText, setIncorText] = useState(false);
   const [patsientInfo, setPatsientInfo] = useState({
     birthday: "",
     passport: "",
@@ -83,23 +85,16 @@ function Account() {
   const handleChangeInput = async (e) => {
     const { name, value } = e.target;
     if ((e.target.name = "passport")) {
+      if (e.target.value.length !== 9) {
+        return;
+      }
       patsientInfo.passport = e.target.value.toUpperCase();
     }
-    if ((e.target.name = "birthday")) {
-      let day = startDate.getDate();
-      if (day < 10) {
-        day = `0${day}`;
-      }
-      let month = startDate.getMonth() + 1;
-      if (month < 10) {
-        month = `0${month}`;
-      }
-      const year = startDate.getFullYear();
-      const time = day + "." + month + "." + year;
-      patsientInfo.birthday = time;
-    }
+    patsientInfo.birthday = startDate;
     setPatsientInfo({ ...patsientInfo, [name]: value });
     setLoading(true);
+    console.log(value.length);
+
     const response = await fetch(
       "https://vitainline.uz/api/v1/auth/signin/patient",
       {
@@ -110,7 +105,6 @@ function Account() {
         body: JSON.stringify(patsientInfo),
       }
     );
-
     const info = await response.json();
     localStorage.setItem("ptoken", info.token);
 
@@ -119,7 +113,22 @@ function Account() {
       localStorage.setItem("patId", info.data.id);
       setPatsientName(info.data.fullname);
       setShowInfo(true);
+    } else {
+      setIncorText(true);
     }
+  };
+
+  if (loading) {
+    setTimeout(() => {
+      setLoading(false);
+      setIncorText(false);
+    }, 1000);
+  }
+
+  const formatChars = {
+    A: "[A-z]",
+    B: "[A-z]",
+    0: "[0-9]",
   };
   return (
     <div className="h-[110vh]  bg-[#F7FEFE]">
@@ -127,7 +136,13 @@ function Account() {
         {/* head */}
         <div className="flex h-[60px] pt-9 justify-center md:justify-between flex-wrap mb-4 items-center">
           <div className="flex">
-            <Image src={img} width={50} height={50} alt="site logo" />
+            <Image
+              src={img}
+              width={50}
+              height={50}
+              alt="site logo"
+              className="w-auto h-auto"
+            />
             <p className="text-black font-[500]">
               Vita in <span className="text-[#57D0CF]">line</span>
             </p>
@@ -156,7 +171,7 @@ function Account() {
         </div>
 
         {/* body  */}
-        <div className="bg-white border border-[#D7E6E7] rounded-[24px] mt-6">
+        <div className="bg-white border border-[#D7E6E7] rounded-[24px] pb-10 mt-6">
           <div className="flex justify-between">
             <div className="bg-[url('../images/account/account-left.png')] bg-no-repeat  ml-[107px] w-[168px] h-[278px]"></div>
 
@@ -173,7 +188,7 @@ function Account() {
             <div className="bg-[url('../images/account/account-right.png')] bg-no-repeat w-[207px] h-[271px] mt-10 mr-16"></div>
           </div>
 
-          <div className="flex justify-between flex-wrap">
+          <div className="flex justify-between flex-wrap border-b pb-5">
             <div className="lg:w-[458px] w-[300px] mdw-[350px] ml-10 flex sm:px-1 px-4 py-2 border border-[#E9F6F7] rounded-[18px] bg-[#F8FEFE]">
               <div className="w-14 h-14 bg-[#E9F9FB] bg-center rounded-[56px] bg-[url('../images/account/suitcase.png')] bg-no-repeat ">
                 <span className="block "></span>
@@ -200,7 +215,7 @@ function Account() {
             </div>
           </div>
 
-          <div className="mx-10">
+          <div className="mx-10 mt-5">
             <h2 className="font-[500] text-[24px] text-[#1B3B3C] ">
               {t("account:pattsient_btn")}
             </h2>
@@ -215,11 +230,13 @@ function Account() {
                   <label className="text-[#759495] mb-[10px]" htmlFor="">
                     {t("account:birth_date")}
                   </label>
-                  <ReactDatePicker
-                    dateFormat="dd.MM.yyyy"
+                  <InputMask
+                    dateformat="dd.MM.yyyy"
+                    mask="99.99.9999"
                     selected={startDate}
-                    onChange={(date) => {
-                      setStartDate(date), handleChangeInput;
+                    placeholder="01.01.0101"
+                    onChange={(e) => {
+                      setStartDate(e.target.value), handleChangeInput;
                     }}
                     className="lg:w-[305px]  w-[220px] border outline-none bg-[#F8FCFC] p-2 dark:bg-white text-[#759495] border-[#D7E6E7] rounded-[12px]"
                   />
@@ -231,8 +248,11 @@ function Account() {
                   >
                     {t("account:passport")}
                   </label>
-                  <input
+                  <InputMask
                     type="text"
+                    mask="AB0000000"
+                    formatChars={formatChars}
+                    maskChar={null}
                     name="passport"
                     placeholder="AA7707787"
                     onChange={handleChangeInput}
@@ -252,6 +272,13 @@ function Account() {
                 )}
               </form>
             </div>
+            {incorText ? (
+              <h3 className="text-center mt-4 text-red-400">
+                Xato ma'lumot kiritdingiz
+              </h3>
+            ) : (
+              ""
+            )}
             {showInfo ? (
               <div className="flex items-center my-5">
                 <IoMdPerson className="text-[#759495]" />
