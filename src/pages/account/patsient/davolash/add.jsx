@@ -217,7 +217,7 @@ function Add({ pills }) {
                                   {t("add:tool")}
                                 </div>
                                 <div className="text-[14px] text-[#759495]  h-100%  font-[400] w-[200px]  p-2 ">
-                                  <DynamicHeader data={pills} />
+                                  <DynamicHeader />
                                 </div>
                               </div>
 

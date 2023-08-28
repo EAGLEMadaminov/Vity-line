@@ -3,10 +3,22 @@ import { BiChevronDown } from "react-icons/bi";
 import { GoSearch } from "react-icons/go";
 import { Field } from "formik";
 
-function LiveSearch({ data }) {
+function LiveSearch() {
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
   const [open, setIsOpen] = useState(false);
+  const [data, setData]=useState([])
+  const fetchFunction = async () => {
+    const response = await fetch("https://vitainline.uz/api/v1/pills", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const jsonData = await response.json();
+    setData(jsonData)
+  };
+  fetchFunction();
   return (
     <div className="w-100% font-medium">
       <div
