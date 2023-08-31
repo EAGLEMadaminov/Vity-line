@@ -45,6 +45,7 @@ function Add({ pills }) {
   const [token, setToken] = useState("");
   const [patId, setPatId] = useState("");
   const [loading, setLoading] = useState(false);
+  const [newValue, setNewValue] = useState(false);
 
   const initialValues = {
     healings: [
@@ -378,7 +379,13 @@ function Add({ pills }) {
                                 </div>
                                 <div className="text-[14px] text-[#759495] font-[400] w-[120px] p-2 ">
                                   <Field
-                                    type="text"
+                                    type="number"
+                                    onChange={() => {
+                                      if (Number(newValue) <= 0) {
+                                        setNewValue(0);
+                                      }
+                                    }}
+                                    value={newValue}
                                     placeholder={t("add:days")}
                                     name={`healings[${index}].period`}
                                     className="outline-none dark:bg-white dark:text-black p-2 border border-[#D7E6E7] rounded-xl w-[100%]"

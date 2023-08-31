@@ -216,10 +216,10 @@ function Account() {
           </div>
 
           <div className="mx-10 mt-5">
-            <h2 className="font-[500] text-[24px] text-[#1B3B3C] ">
+            <h2 className="font-[500] text-[24px] text-[#1B3B3C] mt-2 ">
               {t("account:pattsient_btn")}
             </h2>
-            <div className="flex items-end">
+            <div className="flex items-end mt-4">
               <form
                 action=""
                 id="patsient-form"

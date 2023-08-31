@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BiChevronDown } from "react-icons/bi";
 import { GoSearch } from "react-icons/go";
 import { Field } from "formik";
@@ -7,7 +7,9 @@ function LiveSearch() {
   const [inputValue, setInputValue] = useState("");
   const [selected, setSelected] = useState("");
   const [open, setIsOpen] = useState(false);
-  const [data, setData]=useState([])
+  const [data, setData] = useState([]);
+  const [serchData, setSearchData] = useState([]);
+
   const fetchFunction = async () => {
     const response = await fetch("https://vitainline.uz/api/v1/pills", {
       method: "GET",
@@ -16,9 +18,33 @@ function LiveSearch() {
       },
     });
     const jsonData = await response.json();
-    setData(jsonData)
+    setData(jsonData);
   };
-  fetchFunction();
+  useEffect(() => {
+    fetchFunction();
+  }, []);
+  const handleChange = async () => {
+    if (inputValue.length >= 2) {
+      const respon = await fetch(
+        `https://vitainline.uz/api/v1/pills/search?search=${inputValue}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const jsonData = await respon.json();
+      setSearchData(jsonData);
+    } else {
+      fetchFunction();
+    }
+  };
+  useEffect(() => {
+    handleChange();
+    setData(serchData);
+  }, [inputValue]);
+  console.log(data);
   return (
     <div className="w-100% font-medium">
       <div
@@ -44,14 +70,16 @@ function LiveSearch() {
         }`}
       >
         <div className="flex items-center px-2 sticky top-0 bg-white">
-          <GoSearch size={14} />
           <input
-            type="text"
+            type="search"
             placeholder="Qidiruv"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value.toLowerCase())}
+            onChange={(e) => setInputValue(e.target.value)}
             className="outline-none dark:bg-white dark:text-black w-[130px] placeholder:text-gray-300 font-[400] p-2"
           />
+          <button className="" onClick={handleChange} type="button">
+            <GoSearch size={14} />
+          </button>
         </div>
         {data?.data?.map((item) => {
           return (

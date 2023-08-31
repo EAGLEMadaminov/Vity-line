@@ -179,10 +179,10 @@ function Patsient() {
           </div>
           <span className="w-full  border-[0.5px] border-[#D7E6E7] block"></span>
           <div className="mx-10 my-5">
-            <h2 className="font-[500] text-[24px] text-[#1B3B3C] ">
+            <h2 className="font-[500] text-[24px] text-[#1B3B3C] xl:mt-10 ">
               {t("account:pattsient_btn")}
             </h2>
-            <div className="flex justify-around w-full">
+            <div className="flex justify-around w-full xl:mt-5">
               <Link
                 className="w-[305px] p-2 flex items-center rounded-[12px] shadow-[0px_6px_16px_#EFF4F4]"
                 href="/account/patsient/davolash"
