@@ -83,7 +83,7 @@ function Rengen() {
 
   const handleExit = () => {
     localStorage.clear();
-    router.pathname = "";
+    location.pathname = "/";
   };
 
   const AddClock = () => {

@@ -10,12 +10,10 @@ import { CiGlobe } from "react-icons/ci";
 import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
-import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useGlobalContext } from "@/context.jsx";
 import Link from "next/link";
 import InputMask from "react-input-mask";
-
 export async function getStaticProps({ locale }) {
   return {
     props: {
@@ -47,6 +45,7 @@ function Account() {
 
   useEffect(() => {
     let token = localStorage.getItem("token");
+
     const fetchFunck = async () => {
       const singResponse = await fetch(
         "https://vitainline.uz/api/v1/auth/user",
@@ -67,7 +66,7 @@ function Account() {
       }
     };
     fetchFunck();
-  });
+  }, []);
 
   const ChangeLangBtn = (e) => {
     let lang = e.target.value;
