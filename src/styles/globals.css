@@ -83,24 +83,35 @@
 .react-time-input-picker.is-disabled * {
   cursor: not-allowed !important;
 }
-
-/* .inputWrapper:nth-child(2) {
-  max-width: auto;
+input[type="radio"] + label span {
+  transition: background 0.2s, transform 0.2s;
 }
 
-.inputWrapper:nth-child(1)::after {
-  content: ":";
-  display: flex;
-  align-items: center;
-  font-size: inherit;
-  font-weight: inherit;
-  margin-bottom: 0;
-  height: 100%;
-  box-sizing: border-box;
-  position: relative;
-  top: -1px;
-} */
+input[type="radio"] + label span:hover,
+input[type="radio"] + label:hover span {
+  transform: scale(1.2);
+}
 
+input[type="radio"]:checked + label span {
+  background-color: #3490dc;
+  box-shadow: 0px 0px 0px 2px white inset;
+}
+
+input[type="radio"]:checked + label {
+  color: #3490dc;
+}
+.tarnsformOrigin {
+  animation: modal 0.8s ease 0s 1 forwards;
+}
+@keyframes modal {
+  0% {
+    transform: translate(-50%, -2000px);
+  }
+
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
 .react-time-input-picker input:focus {
   caret-color: transparent;
   background-color: #dadada;

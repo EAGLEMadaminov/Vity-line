@@ -24,8 +24,10 @@ export default function Register(props) {
   const [isSubmit, setIsSubmit] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const { setRegisterInfo, setFormInfo, formInfo } = useGlobalContext();
+  const [chooseAll, setChooseAll] = useState(false);
 
   let response;
+
   const formSubmit = (e) => {
     e.preventDefault();
     if ((e.target.name = "birthday")) {
@@ -41,7 +43,9 @@ export default function Register(props) {
       const time = day + "." + month + "." + year;
       formInfo.birthday = time;
     }
-    setShow(true);
+    if (chooseAll) {
+      setShow(true);
+    }
   };
 
   const EnterAppBtn = async (e) => {
@@ -89,6 +93,19 @@ export default function Register(props) {
       setIsSubmit(false);
     }
     setFormInfo({ ...formInfo, [name]: value });
+    if (
+      formInfo.fullname == "" ||
+      formInfo.birthday == "" ||
+      formInfo.passport == "" ||
+      formInfo.specialty == "" ||
+      formInfo.workplace == "" ||
+      formInfo.position == "" ||
+      formInfo.phone == ""
+    ) {
+      setChooseAll(false);
+    } else {
+      setChooseAll(true);
+    }
   };
 
   const formatChars = {

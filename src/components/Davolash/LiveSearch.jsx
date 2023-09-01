@@ -44,7 +44,6 @@ function LiveSearch() {
     handleChange();
     setData(serchData);
   }, [inputValue]);
-  console.log(data);
   return (
     <div className="w-100% font-medium">
       <div

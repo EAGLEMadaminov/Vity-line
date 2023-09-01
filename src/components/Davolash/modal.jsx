@@ -8,11 +8,11 @@ function Modal({ data }) {
   console.log(data);
   return (
     <div
-      className=" z-[3] absolute left-0 top-0 right-0 bottom-0 bg-[#809291]"
+      className=" z-[3] fixed left-0 top-0 right-0 bottom-0 bg-[rgba(0,0,0,0.2)]"
       onClick={() => setShowModal(false)}
     >
       <div
-        className="relative bg-white w-full top-[50%] translate-x-[-50%] translate-y-[-50%] left-[50%]  md:w-[500px] lg:w-[600px] p-3 lg:p-10  rounded-[18px] "
+        className="relative tarnsformOrigin bg-white w-full top-[50%] translate-x-[-50%] translate-y-[-50%] left-[50%]  md:w-[500px] lg:w-[600px] p-3 lg:p-10  rounded-[18px] "
         onClick={(e) => e.stopPropagation()}
       >
         <button

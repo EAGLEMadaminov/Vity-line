@@ -45,7 +45,7 @@ function Add({ pills }) {
   const [token, setToken] = useState("");
   const [patId, setPatId] = useState("");
   const [loading, setLoading] = useState(false);
-  const [newValue, setNewValue] = useState(false);
+  const [newValue, setNewValue] = useState("");
 
   const initialValues = {
     healings: [
@@ -60,6 +60,7 @@ function Add({ pills }) {
     ],
   };
   const onSubmit = async (values) => {
+    console.log(values);
     setLoading(true);
     let item;
     for (let i = 0; i < values.healings.length; i++) {
@@ -78,19 +79,19 @@ function Add({ pills }) {
     delete values.quantity;
     values.patientId = patId;
     console.log(values);
-    const response = await fetch("https://vitainline.uz/api/v1/healings", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(values),
-    });
+    // const response = await fetch("https://vitainline.uz/api/v1/healings", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    //   body: JSON.stringify(values),
+    // });
 
-    if (response.status == 200 || response.status == 201) {
-      setLoading(false);
-      location.pathname = "/account/patsient/davolash";
-    }
+    // if (response.status == 200 || response.status == 201) {
+    //   setLoading(false);
+    //   location.pathname = "/account/patsient/davolash";
+    // }
   };
   const formik = useFormik({
     initialValues,
@@ -340,33 +341,37 @@ function Add({ pills }) {
                                     as="fieldset"
                                     name={`healings[${index}].type`}
                                   >
-                                    <div className="border border-[#D7E6E7] p-1 rounded-xl">
+                                    <div class="flex items-center  mb-4">
                                       <input
-                                        type="radio"
                                         id="radio1"
-                                        name={`healings[${index}].type`}
+                                        type="radio"
                                         value="Ovqatdan oldin"
-                                        className="form-radio  bg-white brightness-150 active:brightness-150 hover:brightness-150"
+                                        name={`healings[${index}].type`}
+                                        class="hidden"
+                                        checked
                                       />
                                       <label
-                                        htmlFor="radio1"
-                                        className="ml-1 dark:text-[#1B3B3C]"
+                                        for="radio1"
+                                        class="flex items-center cursor-pointer "
                                       >
+                                        <span class="w-4 h-4 inline-block mr-2 rounded-full border border-grey "></span>
                                         {t("add:before_eat")}
                                       </label>
                                     </div>
-                                    <div className="border border-[#D7E6E7] mt-3 p-1 rounded-xl">
+
+                                    <div class="flex items-center  mb-4">
                                       <input
-                                        type="radio"
                                         id="radio2"
+                                        type="radio"
                                         value="Ovqatdan keyin"
                                         name={`healings[${index}].type`}
-                                        className="brightness-150 form-radio p-2 after:w-2 after:h-2 active:brightness-150 hover:brightness-150"
+                                        class="hidden"
                                       />
                                       <label
-                                        htmlFor="radio2"
-                                        className="ml-1 dark:text-[#1B3B3C]"
+                                        for="radio2"
+                                        class="flex items-center cursor-pointer "
                                       >
+                                        <span class="w-4 h-4 inline-block mr-2 rounded-full border border-grey "></span>
                                         {t("add:after_eat")}
                                       </label>
                                     </div>
@@ -380,12 +385,14 @@ function Add({ pills }) {
                                 <div className="text-[14px] text-[#759495] font-[400] w-[120px] p-2 ">
                                   <Field
                                     type="number"
-                                    onChange={() => {
-                                      if (Number(newValue) <= 0) {
-                                        setNewValue(0);
+                                    value={newValue}
+                                    onChange={(e) => {
+                                      if (e.target.value <= 0) {
+                                        setNewValue("");
+                                      } else {
+                                        setNewValue(e.target.value);
                                       }
                                     }}
-                                    value={newValue}
                                     placeholder={t("add:days")}
                                     name={`healings[${index}].period`}
                                     className="outline-none dark:bg-white dark:text-black p-2 border border-[#D7E6E7] rounded-xl w-[100%]"
